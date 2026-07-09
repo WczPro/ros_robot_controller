@@ -1,0 +1,96 @@
+<mujoco model="ur8_arm_robot">
+  <compiler angle="radian" autolimits="true"/>
+
+  <option timestep="0.001" integrator="implicitfast" gravity="0 0 -9.81"/>
+
+  <default>
+    <joint armature="10" damping="500"/>
+    <geom contype="0" conaffinity="0"/>
+  </default>
+
+  <visual>
+    <scale framelength="0.6" framewidth="0.03"/>
+  </visual>
+
+  <asset>
+    <mesh name="base_link" file="meshes/base_link.STL"/>
+    <mesh name="link1" file="meshes/link1.STL"/>
+    <mesh name="link2" file="meshes/link2.STL"/>
+    <mesh name="link3" file="meshes/link3.STL"/>
+    <mesh name="link4" file="meshes/link4.STL"/>
+    <mesh name="link5" file="meshes/link5.STL"/>
+    <mesh name="link6" file="meshes/link6.STL"/>
+    <mesh name="link7" file="meshes/link7.STL"/>
+    <mesh name="link8" file="meshes/link8.STL"/>
+    <mesh name="link_grasp_left" file="meshes/link_grasp_left.STL"/>
+    <mesh name="link_grasp_right" file="meshes/link_grasp_right.STL"/>
+    <mesh name="link_knife" file="meshes/link_knife.STL"/>
+  </asset>
+
+  <worldbody>
+    <geom pos="0 0 2.305" quat="1 0 0 0" type="mesh" rgba="1 0 0.956863 1" mesh="base_link"/>
+    <geom pos="3.6885 -0.0370676 1.2815" quat="1 0 0 0" type="mesh" rgba="0.792157 0.819608 0.933333 1" mesh="link_knife"/>
+    <body name="link1" pos="0 0 2.305" quat="0.5 0.5 0.5 0.5">
+      <inertial pos="0.0603922 0.0275465 1.06605" quat="0.753364 0.0149893 0.0700118 0.653694" mass="551.547" diaginertia="170.312 146.781 45.8164"/>
+      <joint name="joint1" pos="0 0 0" axis="0 0 1" type="slide" range="0 0.9" armature="50" damping="3000"/>
+      <geom type="mesh" rgba="0.529412 0.54902 0.54902 1" mesh="link1"/>
+      <body name="link2" pos="0.194 -0.0646 1.303" quat="0 0.707107 0 -0.707107">
+        <inertial pos="0.322168 0.000775625 0.0692508" quat="0.999906 0.00155294 -0.0135293 0.00129043" mass="222.453" diaginertia="19.2154 17.7017 5.14782"/>
+        <joint name="joint2" pos="0 0 0" axis="0 0 1" range="0 3.14"/>
+        <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link2"/>
+        <body name="link3" pos="0.61 0 0.219" quat="0 0 0 1">
+          <inertial pos="0.229434 0.000277653 0.118892" quat="0.999839 0.00068162 -0.0175034 0.00395962" mass="127.256" diaginertia="7.09919 6.45538 2.35196"/>
+          <joint name="joint3" pos="0 0 0" axis="0 0 1" range="-3.14 0" armature="30" damping="2000"/>
+          <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link3"/>
+          <body name="link4" pos="0.513 0 0.13" quat="0.5 -0.5 0.5 -0.5">
+            <inertial pos="0.122733 -0.050095 0.205443" quat="0.747395 0.658804 -0.0847284 -0.0141437" mass="187.871" diaginertia="10.6595 9.29996 3.7738"/>
+            <joint name="joint4" pos="0 0 0" axis="0 0 -1" range="-0.1745 0.1745"/>
+            <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link4"/>
+            <body name="link5" pos="0.376 -0.04 0.2355" quat="0.5 -0.5 0.5 0.5">
+              <inertial pos="0.411196 6.97142e-05 0.0703008" quat="0.999359 0.000416818 -0.0349428 0.0078276" mass="185.181" diaginertia="13.1619 12.4824 3.3075"/>
+              <joint name="joint5" pos="0 0 0" axis="0 0 1" range="-3.14 0"/>
+              <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link5"/>
+              <body name="link6" pos="0.65 0 0.225" quat="0 0 0 -1">
+                <inertial pos="0.355421 0.00891231 0.0959899" quat="0.99922 -0.0115022 0.00873163 0.0367637" mass="125.179" diaginertia="10.6453 9.97479 1.28441"/>
+                <joint name="joint6" pos="0 0 0" axis="0 0 1" range="0 3.14"/>
+                <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link6"/>
+                <body name="link7" pos="0.71 0 0.072" quat="0 1 0 0">
+                  <inertial pos="0.0596189 9.76126e-05 0.0878434" quat="0.996739 0.000190001 -0.0806968 9.85743e-05" mass="27.7244" diaginertia="0.328199 0.264828 0.211897"/>
+                  <joint name="joint7" pos="0 0 0" axis="0 0 1" range="-3.14 3.14"/>
+                  <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link7"/>
+                  <body name="link8" pos="0.1825 0 0.105" quat="0.707107 0 0.707107 0">
+                    <inertial pos="9.45882e-09 -2.1133e-08 0.0941038" quat="0.647955 0.335882 0.348038 0.588394" mass="57.8103" diaginertia="2.30278 2.088 1.09332"/>
+                    <joint name="joint8" pos="0 0 0" axis="0 0 1" range="-3.14 3.14"/>
+                    <geom type="mesh" rgba="0.341176 0.839216 0.411765 1" mesh="link8"/>
+                    <body name="link_grasp_left" pos="0.1585 0 0.11" quat="0.5 0.5 -0.5 0.5">
+                      <inertial pos="0.192574 -0.0231366 0.000631311" quat="0.999603 -7.53389e-05 -0.0281749 0.000307121" mass="15.8436" diaginertia="0.308197 0.241917 0.110631"/>
+                      <joint name="joint_grasp_left" pos="0 0 0" axis="0 0 1" range="-0.1745 0.1745"/>
+                      <geom type="mesh" rgba="0.529412 0.54902 0.54902 1" mesh="link_grasp_left"/>
+                    </body>
+                    <body name="link_grasp_right" pos="-0.1585 0 0.11" quat="0.5 0.5 -0.5 0.5">
+                      <inertial pos="0.192574 0.0231366 -0.000631311" quat="0.999603 -7.53389e-05 -0.0281749 0.000307121" mass="15.8436" diaginertia="0.308197 0.241917 0.110631"/>
+                      <joint name="joint_grasp_right" pos="0 0 0" axis="0 0 1" range="-0.1745 0.1745"/>
+                      <geom type="mesh" rgba="0.529412 0.54902 0.54902 1" mesh="link_grasp_right"/>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <motor name="joint1" joint="joint1" gear="1" ctrlrange="-30000 30000" forcerange="-30000 30000"/>
+    <motor name="joint2" joint="joint2" gear="1" ctrlrange="-25000 25000" forcerange="-25000 25000"/>
+    <motor name="joint3" joint="joint3" gear="1" ctrlrange="-22000 22000" forcerange="-22000 22000"/>
+    <motor name="joint4" joint="joint4" gear="1" ctrlrange="-20000 20000" forcerange="-20000 20000"/>
+    <motor name="joint5" joint="joint5" gear="1" ctrlrange="-15000 15000" forcerange="-15000 15000"/>
+    <motor name="joint6" joint="joint6" gear="1" ctrlrange="-15000 15000" forcerange="-15000 15000"/>
+    <motor name="joint7" joint="joint7" gear="1" ctrlrange="-12000 12000" forcerange="-12000 12000"/>
+    <motor name="joint8" joint="joint8" gear="1" ctrlrange="-10000 10000" forcerange="-10000 10000"/>
+    <motor name="joint_grasp_left" joint="joint_grasp_left" gear="1" ctrlrange="-500 500" forcerange="-500 500"/>
+    <motor name="joint_grasp_right" joint="joint_grasp_right" gear="1" ctrlrange="-500 500" forcerange="-500 500"/>
+  </actuator>
+</mujoco>

@@ -32,8 +32,7 @@
 #include "mujoco/array_safety.h"
 
 #include "fr3_controller.hpp"
-#include "xls_controller.hpp"
-#include "fr3_xls_controller.hpp"
+#include "ur8_controller.hpp"
 
 #define MUJOCO_PLUGIN_DIR "mujoco_plugin"
 
@@ -54,6 +53,37 @@ extern "C" {
 #endif
 }
 
+// # ── 1. 编译安装库 ──
+// cd /home/zhan/Projects/robot_grasp_project/code/ros_robot_controller
+// mkdir -p build && cd build
+// cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/dyros_install ..
+// make -j$(nproc)
+// make install
+
+// # ── 2. 编译示例 ──
+// cd ../examples/C++/build
+// cmake ..
+// make -j$(nproc)
+
+// # ── 3. 运行 ──
+// ./dyros_robot_controller_example fr3
+
+// cd /home/zhan/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/build
+// cmake .. && make -j$(nproc) && ./dyros_robot_controller_example fr3
+
+
+// 启动后会弹出 MuJoCo 仿真窗口，XLS 模式下的键盘控制：
+
+// 按 2 进入速度跟踪模式
+// ↑↓←→ 控制平移，b/v 控制旋转
+// 按 1 停止，按 q 退出
+
+// 按键	模式	行为
+// 1	Home	关节空间 cubic 轨迹回到预设姿态 [0, 0, 0, -90°, 0, 90°, 45°]
+// 2	QPIK	任务空间 QP 逆运动学，末端向 Y+10cm, Z+10cm 移动
+// 3	Gravity Compensation	纯重力补偿，机械臂自由飘浮（可手动拖拽）
+// 4	Gravity Compensation W QPID	重力补偿 + QP 逆动力学稳定
+
 namespace {
 namespace mj = ::mujoco;
 namespace mju = ::mujoco::sample_util;
@@ -72,8 +102,7 @@ using Seconds = std::chrono::duration<double>;
 std::unordered_map<std::string, int> joint_idx_;
 std::unordered_map<std::string, int> act_idx_;
 std::unique_ptr<FR3Controller> fr3_controller_;
-std::unique_ptr<XLSController> xls_controller_;
-std::unique_ptr<FR3XLSController> fr3_xls_controller_;
+std::unique_ptr<UR8Controller> ur8_controller_;
 
 std::string robot_name_ = "fr3";
 
@@ -351,6 +380,7 @@ void PhysicsLoop(mj::Simulate& sim) {
       if (mnew) dnew = mj_makeData(mnew);
       if (dnew) {
         sim.Load(mnew, dnew, sim.dropfilename);
+        sim.opt.frame = mjFRAME_BODY;
 
         // lock the sim mutex
         const std::unique_lock<std::recursive_mutex> lock(sim.mtx);
@@ -385,6 +415,17 @@ void PhysicsLoop(mj::Simulate& sim) {
         m = mnew;
         d = dnew;
         mj_forward(m, d);
+
+        // UR8 initial pose — use joint names (safer than hardcoded qpos indices)
+        if (robot_name_ == "ur8") {
+          auto set_qpos = [&](const char* name, double val) {
+            int jid = mj_name2id(m, mjOBJ_JOINT, name);
+            if (jid >= 0) d->qpos[m->jnt_qposadr[jid]] = val;
+          };
+          set_qpos("joint_grasp_left",  -0.1262);
+          set_qpos("joint_grasp_right",  0.0145);
+          mj_forward(m, d);
+        }
 
       } else {
         sim.LoadMessageClear();
@@ -432,7 +473,7 @@ void PhysicsLoop(mj::Simulate& sim) {
             sim.speed_changed = false;
 
             // inject noise
-            sim.InjectNoise(sim.key);
+            sim.InjectNoise();
 
             // run single step, let next iteration deal with timing
             mj_step(m, d);
@@ -464,7 +505,7 @@ void PhysicsLoop(mj::Simulate& sim) {
               }
 
               // inject noise
-              sim.InjectNoise(sim.key);
+              sim.InjectNoise();
 
               // Build qpos/qvel dicts
               std::unordered_map<std::string, Eigen::VectorXd> qpos_dict, qvel_dict;
@@ -484,31 +525,26 @@ void PhysicsLoop(mj::Simulate& sim) {
 
               // Controller update & compute
               std::unordered_map<std::string, double> ctrl_map;
-              if(robot_name_ == "fr3")
+              if (robot_name_ == "ur8")
+              {
+                ur8_controller_->updateModel(d->time, qpos_dict, qvel_dict);
+                ctrl_map = ur8_controller_->compute();
+              }
+              else
               {
                 fr3_controller_->updateModel(d->time, qpos_dict, qvel_dict);
                 ctrl_map = fr3_controller_->compute();
-              }
-              else if(robot_name_ == "xls")
-              {
-                xls_controller_->updateModel(d->time, qpos_dict, qvel_dict);
-                ctrl_map = xls_controller_->compute();
-              }
-              else if(robot_name_ == "fr3_xls")
-              {
-                fr3_xls_controller_->updateModel(d->time, qpos_dict, qvel_dict);
-                ctrl_map = fr3_xls_controller_->compute();
               }
 
               // Apply to actuators
               for (const auto& [aname, aval] : ctrl_map) {
                 auto it = act_idx_.find(aname);
                 if (it != act_idx_.end()) d->ctrl[it->second] = static_cast<mjtNum>(aval);
-            }
+              }
 
               // call mj_step
               mj_step(m, d);
-              
+
               const char* message = Diverged(m->opt.disableflags, d);
               if (message) {
                 sim.run = 0;
@@ -560,6 +596,7 @@ void PhysicsThread(mj::Simulate* sim, const char* filename) {
     }
     if (d) {
       sim->Load(m, d, filename);
+      sim->opt.frame = mjFRAME_BODY;  // show body frames on load
 
       // lock the sim mutex
       const std::unique_lock<std::recursive_mutex> lock(sim->mtx);
@@ -583,18 +620,19 @@ void PhysicsThread(mj::Simulate* sim, const char* filename) {
       auto name = getName(m, adr);
       if (!name.empty()) act_idx_[name] = i;
     }
-    // Dynamically load the controller class based on robot_name_
-    if(robot_name_ == "fr3")
+    // Diagnostic: print actuator mapping
+    std::cout << "[DIAG] MuJoCo actuators (nu=" << m->nu << "):" << std::endl;
+    for (const auto& [aname, aidx] : act_idx_)
+      std::cout << "  " << aname << " -> ctrl[" << aidx << "]" << std::endl;
+
+    // Load the appropriate controller
+    if (robot_name_ == "ur8")
+    {
+      ur8_controller_ = std::make_unique<UR8Controller>(m->opt.timestep);
+    }
+    else
     {
       fr3_controller_ = std::make_unique<FR3Controller>(m->opt.timestep);
-    }
-    else if(robot_name_ == "xls")
-    {
-      xls_controller_ = std::make_unique<XLSController>(m->opt.timestep);
-    }
-    else if(robot_name_ == "fr3_xls")
-    {
-      fr3_xls_controller_ = std::make_unique<FR3XLSController>(m->opt.timestep);
     }
   }
 
@@ -646,6 +684,7 @@ int main(int argc, char** argv) {
 
   mjvOption opt;
   mjv_defaultOption(&opt);
+  opt.frame = mjFRAME_BODY;  // show body coordinate frames
 
   mjvPerturb pert;
   mjv_defaultPerturb(&pert);
@@ -655,15 +694,17 @@ int main(int argc, char** argv) {
       std::make_unique<mj::GlfwAdapter>(),
       &cam, &opt, &pert, /* is_passive = */ false
   );
+  sim->opt.frame = mjFRAME_BODY;     // show body coordinate frames
 
-  const std::vector<std::string> VALID_ROBOT_LIST = {"fr3", "xls", "fr3_xls"};
-  if (argc >  1) 
+  // FR3 manipulator only
+  robot_name_ = "fr3";
+  if (argc > 1)
   {
     robot_name_ = argv[1];
   }
-  if (std::find(VALID_ROBOT_LIST.begin(), VALID_ROBOT_LIST.end(), robot_name_) == VALID_ROBOT_LIST.end()) {
-    std::cerr << "Invalid robot name '" << robot_name_ 
-              << "'. Must be one of [fr3, xls, fr3_xls]." << std::endl;
+  if (robot_name_ != "fr3" && robot_name_ != "ur8") {
+    std::cerr << "Invalid robot name '" << robot_name_
+              << "'. Must be 'fr3' or 'ur8'." << std::endl;
     return 1;
   }
   

@@ -46,12 +46,8 @@ include_directories(
 )
 
 add_library(${PROJECT_NAME} SHARED
-  src/mobile/robot_controller.cpp
-  src/mobile/robot_data.cpp
   src/manipulator/robot_controller.cpp
   src/manipulator/robot_data.cpp
-  src/mobile_manipulator/robot_controller.cpp
-  src/mobile_manipulator/robot_data.cpp
 )
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "12")
@@ -67,10 +63,6 @@ target_sources(${PROJECT_NAME} PRIVATE
   src/manipulator/QP_IK.cpp
   src/manipulator/HQP_IK.cpp
   src/manipulator/HQP_ID.cpp
-  src/mobile_manipulator/QP_ID.cpp
-  src/mobile_manipulator/QP_IK.cpp
-  src/mobile_manipulator/HQP_IK.cpp
-  src/mobile_manipulator/HQP_ID.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "mujoco/glfw_adapter.h"
+#include "glfw_adapter.h"
 
 #include <cstdlib>
 #include <utility>
@@ -20,7 +20,7 @@
 #include <GLFW/glfw3.h>
 #include <mujoco/mjui.h>
 #include <mujoco/mujoco.h>
-#include "mujoco/glfw_dispatch.h"
+#include "glfw_dispatch.h"
 
 #ifdef __APPLE__
 #include "glfw_corevideo.h"

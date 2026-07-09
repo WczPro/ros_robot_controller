@@ -27,6 +27,7 @@ add_definitions(-DROBOTS_DIRECTORY="${CMAKE_SOURCE_DIR}/../robots")
 
 # Local public headers (for your controller/example code)
 include_directories(include)
+include_directories(include/mujoco)
 
 # =========================================================
 # dyros_robot_controller — HOW TO USE IN CMAKE
@@ -46,8 +47,7 @@ add_executable(${PROJECT_NAME}
 # Your control/example sources that use dyros_robot_controller
 target_sources(${PROJECT_NAME} PRIVATE
   src/fr3_controller.cpp
-  src/xls_controller.cpp
-  src/fr3_xls_controller.cpp
+  src/ur8_controller.cpp
 )
 
 # Link the dyros controller (PRIMARY dependency)

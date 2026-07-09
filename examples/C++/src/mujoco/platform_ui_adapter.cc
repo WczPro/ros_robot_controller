@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "mujoco/platform_ui_adapter.h"
+#include "platform_ui_adapter.h"
 
 #include <chrono>
 
