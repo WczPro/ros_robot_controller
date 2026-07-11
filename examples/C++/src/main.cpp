@@ -32,7 +32,10 @@
 #include "mujoco/array_safety.h"
 
 #include "fr3_controller.hpp"
-#include "ur8_controller.hpp"
+#include "ur8_controller_qpid.hpp"
+#include "ur8_controller_qpik.hpp"
+#include "ur8_controller_hqpik.hpp"
+#include "ur8_controller_hqpid.hpp"
 
 #define MUJOCO_PLUGIN_DIR "mujoco_plugin"
 
@@ -102,7 +105,10 @@ using Seconds = std::chrono::duration<double>;
 std::unordered_map<std::string, int> joint_idx_;
 std::unordered_map<std::string, int> act_idx_;
 std::unique_ptr<FR3Controller> fr3_controller_;
-std::unique_ptr<UR8Controller> ur8_controller_;
+std::unique_ptr<UR8ControllerQPID> ur8_controller_;
+std::unique_ptr<UR8ControllerQPIK> ur8_qpik_controller_;
+std::unique_ptr<UR8ControllerHQP> ur8_hqpik_controller_;
+std::unique_ptr<UR8ControllerHQPID> ur8_hqpid_controller_;
 
 std::string robot_name_ = "fr3";
 
@@ -416,8 +422,8 @@ void PhysicsLoop(mj::Simulate& sim) {
         d = dnew;
         mj_forward(m, d);
 
-        // UR8 initial pose — use joint names (safer than hardcoded qpos indices)
-        if (robot_name_ == "ur8") {
+        // UR8 initial pose
+        if (robot_name_ == "ur8" || robot_name_ == "ur8_qpik" || robot_name_ == "ur8_qpid" || robot_name_ == "ur8_hqpik" || robot_name_ == "ur8_hqpid") {
           auto set_qpos = [&](const char* name, double val) {
             int jid = mj_name2id(m, mjOBJ_JOINT, name);
             if (jid >= 0) d->qpos[m->jnt_qposadr[jid]] = val;
@@ -525,7 +531,22 @@ void PhysicsLoop(mj::Simulate& sim) {
 
               // Controller update & compute
               std::unordered_map<std::string, double> ctrl_map;
-              if (robot_name_ == "ur8")
+              if (robot_name_ == "ur8_hqpik")
+              {
+                ur8_hqpik_controller_->updateModel(d->time, qpos_dict, qvel_dict);
+                ctrl_map = ur8_hqpik_controller_->compute();
+              }
+              else if (robot_name_ == "ur8_hqpid")
+              {
+                ur8_hqpid_controller_->updateModel(d->time, qpos_dict, qvel_dict);
+                ctrl_map = ur8_hqpid_controller_->compute();
+              }
+              else if (robot_name_ == "ur8_qpik")
+              {
+                ur8_qpik_controller_->updateModel(d->time, qpos_dict, qvel_dict);
+                ctrl_map = ur8_qpik_controller_->compute();
+              }
+              else if (robot_name_ == "ur8" || robot_name_ == "ur8_qpid")
               {
                 ur8_controller_->updateModel(d->time, qpos_dict, qvel_dict);
                 ctrl_map = ur8_controller_->compute();
@@ -626,9 +647,21 @@ void PhysicsThread(mj::Simulate* sim, const char* filename) {
       std::cout << "  " << aname << " -> ctrl[" << aidx << "]" << std::endl;
 
     // Load the appropriate controller
-    if (robot_name_ == "ur8")
+    if (robot_name_ == "ur8_hqpik")
     {
-      ur8_controller_ = std::make_unique<UR8Controller>(m->opt.timestep);
+      ur8_hqpik_controller_ = std::make_unique<UR8ControllerHQP>(m->opt.timestep);
+    }
+    else if (robot_name_ == "ur8_hqpid")
+    {
+      ur8_hqpid_controller_ = std::make_unique<UR8ControllerHQPID>(m->opt.timestep);
+    }
+    else if (robot_name_ == "ur8_qpik")
+    {
+      ur8_qpik_controller_ = std::make_unique<UR8ControllerQPIK>(m->opt.timestep);
+    }
+    else if (robot_name_ == "ur8" || robot_name_ == "ur8_qpid")
+    {
+      ur8_controller_ = std::make_unique<UR8ControllerQPID>(m->opt.timestep);
     }
     else
     {
@@ -702,13 +735,18 @@ int main(int argc, char** argv) {
   {
     robot_name_ = argv[1];
   }
-  if (robot_name_ != "fr3" && robot_name_ != "ur8") {
+  if (robot_name_ != "fr3" && robot_name_ != "ur8"
+      && robot_name_ != "ur8_qpik" && robot_name_ != "ur8_qpid"
+      && robot_name_ != "ur8_hqpik" && robot_name_ != "ur8_hqpid") {
     std::cerr << "Invalid robot name '" << robot_name_
-              << "'. Must be 'fr3' or 'ur8'." << std::endl;
+              << "'. Must be: fr3 ur8_qpid ur8_qpik ur8_hqpik ur8_hqpid" << std::endl;
     return 1;
   }
   
-  const std::string filename_str = std::string(ROBOTS_DIRECTORY) + "/" + robot_name_ + "/scene.xml";
+  // Map ur8_qpik / ur8_qpid to the ur8 scene directory
+  std::string scene_dir = robot_name_;
+  if (scene_dir == "ur8_qpik" || scene_dir == "ur8_qpid" || scene_dir == "ur8_hqpik" || scene_dir == "ur8_hqpid") scene_dir = "ur8";
+  const std::string filename_str = std::string(ROBOTS_DIRECTORY) + "/" + scene_dir + "/scene.xml";
   const char* filename = filename_str.c_str();
 
   // start physics thread

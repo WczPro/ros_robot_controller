@@ -366,7 +366,7 @@ SharedIneqData HQPIK::computeSharedConstraints()
         // si_index_.con_sel_col_start row stays trivial
     }
 
-    // singularity avoidance CBF (reserved – activate by uncommenting below)
+    // singularity avoidance CBF — disabled, link_name not defined in this context
     // const ManipulabilityResult mani = robot_data_->getManipulability(true, false, link_name);
     // if (mani.grad.size() == joint_dof_ && mani.grad.allFinite())
     // {

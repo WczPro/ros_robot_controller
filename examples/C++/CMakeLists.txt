@@ -47,7 +47,10 @@ add_executable(${PROJECT_NAME}
 # Your control/example sources that use dyros_robot_controller
 target_sources(${PROJECT_NAME} PRIVATE
   src/fr3_controller.cpp
-  src/ur8_controller.cpp
+  src/ur8_controller_QPID.cpp
+  src/ur8_controller_QPIK.cpp
+  src/ur8_controller_HQPIK.cpp
+  src/ur8_controller_HQPID.cpp
 )
 
 # Link the dyros controller (PRIMARY dependency)

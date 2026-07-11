@@ -179,12 +179,14 @@ namespace drc
 
                     if (!solver_initialized_)
                     {
-                        // settings
+                        // settings — tuned for HQP ID with ill-conditioned mass matrix (500kg arm)
                         solver_.settings()->setWarmStart(true);
-                        // solver_.settings()->getSettings()->eps_abs = 1e-4;
-                        // solver_.settings()->getSettings()->eps_rel = 1e-5;
+                        solver_.settings()->getSettings()->eps_abs = 1e-4;   // tighter — row-scaled dynamics improves conditioning
+                        solver_.settings()->getSettings()->eps_rel = 1e-3;
                         solver_.settings()->getSettings()->verbose = false;
-                        solver_.settings()->getSettings()->time_limit = 3e-4;
+                        solver_.settings()->getSettings()->max_iter = 50000; // increased from default 4000 — occasional slow convergence
+                        solver_.settings()->getSettings()->time_limit = 0.1;  // 100ms — avoid false timeouts for occasional hard problems
+                        solver_.settings()->getSettings()->adaptive_rho = true;
 
                         // set the initial data of the QP solver
                         solver_.data()->setNumberOfVariables(nx_);
@@ -230,6 +232,7 @@ namespace drc
                         last_dual_.setZero(nc_);
                         return false;
                     }
+                    time_status.solve_qp = timer_.elapsedAndReset();  // capture before status check
                     qp_status_ = solver_.getStatus();
                     if (qp_status_ != OsqpEigen::Status::Solved &&
                         qp_status_ != OsqpEigen::Status::SolvedInaccurate &&
@@ -242,9 +245,12 @@ namespace drc
                         return false;
                     }
                     if (qp_status_ == OsqpEigen::Status::TimeLimitReached)
-                        std::cerr << "[QP] WARNING: TimeLimitReached, using best-effort solution" << std::endl;
-
-                    time_status.solve_qp = timer_.elapsedAndReset();
+                        std::cerr << "[QP] WARNING: TimeLimitReached (solve_t=" << time_status.solve_qp*1e3
+                                  << "ms), using best-effort solution" << std::endl;
+                    static int qp_ok_cnt = 0;
+                    if (++qp_ok_cnt % 500 == 0)
+                        std::cout << "[QP] status=" << statusToString(qp_status_)
+                                  << " solve_t=" << time_status.solve_qp*1e3 << "ms" << std::endl;
 
                     sol = solver_.getSolution();
                     const VectorXd dual_sol = solver_.getDualSolution();

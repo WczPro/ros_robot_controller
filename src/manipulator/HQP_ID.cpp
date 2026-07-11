@@ -278,9 +278,15 @@ void HQP_ID_base::setEqConstraint()
     const MatrixXd M   = robot_data_->getMassMatrix();
     const MatrixXd nle = robot_data_->getNonlinearEffects();
 
-    A_eq_ds_.block(si_index_.con_dyn_start, si_index_.qddot_start,  si_index_.con_dyn_size, si_index_.qddot_size)  = M;
-    A_eq_ds_.block(si_index_.con_dyn_start, si_index_.torque_start, si_index_.con_dyn_size, si_index_.torque_size) = -MatrixXd::Identity(si_index_.con_dyn_size, si_index_.torque_size);
-    b_eq_ds_.segment(si_index_.con_dyn_start, si_index_.con_dyn_size) = -nle;
+    // Row-scale dynamics constraints by 1/sqrt(M_ii) to normalize
+    // constraint row norms (critical for heavy arms with M spanning 5+ orders)
+    Eigen::VectorXd row_scale(joint_dof_);
+    for (int i = 0; i < joint_dof_; ++i)
+        row_scale(i) = 1.0 / std::sqrt(std::max(M(i,i), 1e-8));
+
+    A_eq_ds_.block(si_index_.con_dyn_start, si_index_.qddot_start,  si_index_.con_dyn_size, si_index_.qddot_size)  = row_scale.asDiagonal() * M;
+    A_eq_ds_.block(si_index_.con_dyn_start, si_index_.torque_start, si_index_.con_dyn_size, si_index_.torque_size) = (-row_scale).asDiagonal();
+    b_eq_ds_.segment(si_index_.con_dyn_start, si_index_.con_dyn_size) = -(row_scale.asDiagonal() * nle);
 
     // Higher-priority task accelerations: J_eq * qddot = a_eq
     if (si_index_.con_hp_size > 0 && J_eq_.rows() == si_index_.con_hp_size)

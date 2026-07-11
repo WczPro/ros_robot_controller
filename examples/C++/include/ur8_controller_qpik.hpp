@@ -31,11 +31,11 @@
 #include "dyros_robot_controller/manipulator/robot_data.h"
 #include "dyros_robot_controller/manipulator/robot_controller.h"
 
-class UR8Controller
+class UR8ControllerQPIK
 {
     public:
-        UR8Controller(const double dt);
-        ~UR8Controller();
+        UR8ControllerQPIK(const double dt);
+        ~UR8ControllerQPIK();
         void updateModel(const double current_time,
                          const std::unordered_map<std::string, Eigen::VectorXd>& qpos_dict,
                          const std::unordered_map<std::string, Eigen::VectorXd>& qvel_dict);
@@ -63,7 +63,7 @@ class UR8Controller
         std::string ee_link_name_{"link_tool"};
 
         // Mode bookkeeping
-        std::string control_mode_{"Home"};
+        std::string control_mode_{"Pose Knife"};
         bool   is_mode_changed_{true};
         double sim_time_{0.0};
         double control_start_time_{0.0};

@@ -1,0 +1,886 @@
+ontroller] URDF file loaded successfully!: /home/zhan/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/../robots/ur8/ur8.urdf
+[dyros_robot_controller] Packages folder does not exist! : 
+[dyros_robot_controller] Collision model for the robot may not be perfect!
+[dyros_robot_controller] SRDF file loaded successfully!: /home/zhan/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/../robots/ur8/ur8.srdf
+info: 
+Total nq = 10
+Total nv = 10
+
+ id | name                 | nq | nv | idx_q | idx_v
+----+----------------------+----+----+-------+------
+  1 |               joint1 |  1 |  1 |     0 |    0
+  2 |               joint2 |  1 |  1 |     1 |    1
+  3 |               joint3 |  1 |  1 |     2 |    2
+  4 |               joint4 |  1 |  1 |     3 |    3
+  5 |               joint5 |  1 |  1 |     4 |    4
+  6 |               joint6 |  1 |  1 |     5 |    5
+  7 |               joint7 |  1 |  1 |     6 |    6
+  8 |               joint8 |  1 |  1 |     7 |    7
+  9 |     joint_grasp_left |  1 |  1 |     8 |    8
+ 10 |    joint_grasp_right |  1 |  1 |     9 |    9
+
+[UR8 HQP] Arrows=Translate WASD=Rotate 1=Home 5=Knife
+Control Mode Changed: QPIK_Up
+[HQPID diag#100] pos_err=0.0723911 rot_err=0.0146755 |tau|=25137.4
+[HQPID diag#200] pos_err=0.139206 rot_err=0.0463809 |tau|=8017.78
+[HQPID diag#300] pos_err=0.2591 rot_err=0.0647505 |tau|=7723.57
+[HQPID diag#400] pos_err=0.412497 rot_err=0.0602742 |tau|=7682.07
+[HQPID diag#500] pos_err=0.560205 rot_err=0.0435382 |tau|=7773.35
+[HQPID diag#600] pos_err=0.654759 rot_err=0.14044 |tau|=7758.1
+[HQPID diag#700] pos_err=0.709878 rot_err=0.33998 |tau|=7583.84
+[HQPID diag#800] pos_err=0.731424 rot_err=0.528129 |tau|=14856.6
+[HQPID diag#900] pos_err=0.617488 rot_err=0.599322 |tau|=35058.2
+[HQPID diag#1000] pos_err=0.350016 rot_err=0.547336 |tau|=34792.4
+[HQPID diag#1100] pos_err=0.281072 rot_err=0.304942 |tau|=38636.4
+[HQPID diag#1200] pos_err=0.70601 rot_err=0.122723 |tau|=40211.6
+[HQPID diag#1300] pos_err=0.982118 rot_err=0.264812 |tau|=39801
+[HQPID diag#1400] pos_err=0.902151 rot_err=0.237957 |tau|=18149.1
+[HQPID diag#1500] pos_err=0.573994 rot_err=0.0956803 |tau|=16403.6
+[HQPID diag#1600] pos_err=0.240449 rot_err=0.0814932 |tau|=16144.1
+[HQPID diag#1700] pos_err=0.470833 rot_err=0.212143 |tau|=11862.6
+[HQPID diag#1800] pos_err=0.711283 rot_err=0.307225 |tau|=11737.8
+[HQPID diag#1900] pos_err=0.729451 rot_err=0.325678 |tau|=10772.5
+[HQPID diag#2000] pos_err=0.62987 rot_err=0.234021 |tau|=11687.4
+[HQPID diag#2100] pos_err=0.458036 rot_err=0.124569 |tau|=18554.5
+[HQPID diag#2200] pos_err=0.343155 rot_err=0.0872893 |tau|=20233.5
+[HQPID diag#2300] pos_err=0.305792 rot_err=0.0451401 |tau|=20329.6
+[HQPID diag#2400] pos_err=0.337726 rot_err=0.0518333 |tau|=20316.7
+[HQPID diag#2500] pos_err=0.439411 rot_err=0.0757507 |tau|=20210.9
+[HQPID diag#2600] pos_err=0.626329 rot_err=0.114606 |tau|=22180.4
+[HQPID diag#2700] pos_err=0.719287 rot_err=0.0600677 |tau|=22236.3
+[HQPID diag#2800] pos_err=0.713663 rot_err=0.181306 |tau|=22304.3
+[HQPID diag#2900] pos_err=0.638278 rot_err=0.232942 |tau|=22330.9
+[HQPID diag#3000] pos_err=0.637535 rot_err=0.162799 |tau|=22342.2
+[HQPID diag#3100] pos_err=0.818589 rot_err=0.0543759 |tau|=22384.4
+[HQPID diag#3200] pos_err=1.01641 rot_err=0.164353 |tau|=22492.4
+[HQPID diag#3300] pos_err=1.04797 rot_err=0.187277 |tau|=18557.3
+[HQPID diag#3400] pos_err=0.923474 rot_err=0.0739504 |tau|=17840.9
+[HQPID diag#3500] pos_err=0.87921 rot_err=0.346716 |tau|=17470.9
+[HQPID diag#3600] pos_err=0.978662 rot_err=0.587498 |tau|=19044.1
+[HQPID diag#3700] pos_err=1.00937 rot_err=0.708278 |tau|=33024.5
+[HQPID diag#3800] pos_err=0.834949 rot_err=0.718242 |tau|=30579.4
+[HQPID diag#3900] pos_err=0.494351 rot_err=0.566757 |tau|=27376.4
+[HQPID diag#4000] pos_err=0.283909 rot_err=0.173634 |tau|=41158.1
+[HQPID diag#4100] pos_err=0.721223 rot_err=0.253766 |tau|=34347.2
+[HQPID diag#4200] pos_err=0.87224 rot_err=0.413048 |tau|=10248.7
+[HQPID diag#4300] pos_err=0.701961 rot_err=0.335499 |tau|=8963.48
+[HQPID diag#4400] pos_err=0.437429 rot_err=0.174056 |tau|=28378.3
+[HQPID diag#4500] pos_err=0.284858 rot_err=0.10508 |tau|=22913.9
+[HQPID diag#4600] pos_err=0.210401 rot_err=0.0821726 |tau|=21458.5
+[HQPID diag#4700] pos_err=0.245009 rot_err=0.0970436 |tau|=8196.15
+[HQPID diag#4800] pos_err=0.314874 rot_err=0.0896892 |tau|=4719.77
+[HQPID diag#4900] pos_err=0.349045 rot_err=0.0651487 |tau|=4751.91
+[HQPID diag#5000] pos_err=0.312976 rot_err=0.0742469 |tau|=20603.1
+[HQPID diag#5100] pos_err=0.207336 rot_err=0.170979 |tau|=20421.8
+[HQPID diag#5200] pos_err=0.106354 rot_err=0.182408 |tau|=11829.5
+[HQPID diag#5300] pos_err=0.286826 rot_err=0.152866 |tau|=8908.36
+[HQPID diag#5400] pos_err=0.65819 rot_err=0.191913 |tau|=31141.1
+[HQPID diag#5500] pos_err=0.787501 rot_err=0.168418 |tau|=30749
+[HQPID diag#5600] pos_err=0.629775 rot_err=0.103798 |tau|=26952.3
+[HQPID diag#5700] pos_err=0.303552 rot_err=0.194267 |tau|=11811.9
+[HQPID diag#5800] pos_err=0.134528 rot_err=0.33875 |tau|=2845.68
+[HQPID diag#5900] pos_err=0.350738 rot_err=0.419388 |tau|=6735.3
+[HQPID diag#6000] pos_err=0.486538 rot_err=0.457684 |tau|=30864.3
+[HQPID diag#6100] pos_err=0.453541 rot_err=0.39367 |tau|=30424.5
+[HQPID diag#6200] pos_err=0.321831 rot_err=0.309728 |tau|=28879
+[HQPID diag#6300] pos_err=0.173562 rot_err=0.214198 |tau|=29429
+[HQPID diag#6400] pos_err=0.0853127 rot_err=0.143714 |tau|=29237.6
+[HQPID diag#6500] pos_err=0.0937711 rot_err=0.113574 |tau|=19071.4
+[HQPID diag#6600] pos_err=0.097824 rot_err=0.102514 |tau|=18768.4
+[HQPID diag#6700] pos_err=0.0388962 rot_err=0.157259 |tau|=31759.2
+[HQPID diag#6800] pos_err=0.0824614 rot_err=0.163087 |tau|=16805.7
+[HQPID diag#6900] pos_err=0.135442 rot_err=0.226025 |tau|=32950.9
+[HQPID diag#7000] pos_err=0.151271 rot_err=0.193812 |tau|=33345.1
+[HQPID diag#7100] pos_err=0.163223 rot_err=0.218899 |tau|=28416
+[HQPID diag#7200] pos_err=0.140045 rot_err=0.184307 |tau|=10727.4
+[HQPID diag#7300] pos_err=0.099875 rot_err=0.14491 |tau|=23393.1
+[HQPID diag#7400] pos_err=0.0659825 rot_err=0.134573 |tau|=32363.3
+[HQPID diag#7500] pos_err=0.0698119 rot_err=0.127907 |tau|=25879
+[HQPID diag#7600] pos_err=0.0498989 rot_err=0.125135 |tau|=31215.5
+[HQPID diag#7700] pos_err=0.131103 rot_err=0.124843 |tau|=29401.1
+[HQPID diag#7800] pos_err=0.146692 rot_err=0.131946 |tau|=32605.9
+[HQPID diag#7900] pos_err=0.102092 rot_err=0.0915307 |tau|=15387.1
+[HQPID diag#8000] pos_err=0.0391448 rot_err=0.0611323 |tau|=15642.8
+[HQPID diag#8100] pos_err=0.12016 rot_err=0.0736919 |tau|=21612
+[HQPID diag#8200] pos_err=0.228671 rot_err=0.14523 |tau|=17591.8
+[HQPID diag#8300] pos_err=0.23293 rot_err=0.13637 |tau|=17349.3
+[HQPID diag#8400] pos_err=0.201491 rot_err=0.201809 |tau|=18202
+[HQPID diag#8500] pos_err=0.128718 rot_err=0.157197 |tau|=30265
+[HQPID diag#8600] pos_err=0.0324918 rot_err=0.115952 |tau|=11526.2
+[HQPID diag#8700] pos_err=0.113482 rot_err=0.157381 |tau|=33901.8
+[HQPID diag#8800] pos_err=0.116009 rot_err=0.147348 |tau|=38818.4
+[HQPID diag#8900] pos_err=0.123043 rot_err=0.14759 |tau|=23368.3
+[HQPID diag#9000] pos_err=0.185589 rot_err=0.111429 |tau|=9973.47
+[HQPID diag#9100] pos_err=0.14268 rot_err=0.0740022 |tau|=9657.62
+[HQPID diag#9200] pos_err=0.270305 rot_err=0.229122 |tau|=11470
+[HQPID diag#9300] pos_err=0.542776 rot_err=0.221022 |tau|=11441.6
+[HQPID diag#9400] pos_err=0.843659 rot_err=0.280665 |tau|=11438.5
+[HQPID diag#9500] pos_err=1.07447 rot_err=0.350351 |tau|=19755
+[HQPID diag#9600] pos_err=0.979909 rot_err=0.32077 |tau|=18193
+[HQPID diag#9700] pos_err=0.688625 rot_err=0.197871 |tau|=17780.9
+[HQPID diag#9800] pos_err=0.400631 rot_err=0.0595922 |tau|=17515.7
+[HQPID diag#9900] pos_err=0.46822 rot_err=0.121108 |tau|=14742
+[HQPID diag#10000] pos_err=0.600191 rot_err=0.130305 |tau|=14615.3
+[HQPID diag#10100] pos_err=0.554966 rot_err=0.0755188 |tau|=14403
+[HQPID diag#10200] pos_err=0.439506 rot_err=0.144599 |tau|=8695.77
+[HQPID diag#10300] pos_err=0.49598 rot_err=0.237504 |tau|=9169.97
+[HQPID diag#10400] pos_err=0.644561 rot_err=0.368395 |tau|=9307.71
+[HQPID diag#10500] pos_err=0.681636 rot_err=0.435702 |tau|=9303.17
+[HQPID diag#10600] pos_err=0.616977 rot_err=0.457861 |tau|=13999.8
+[HQPID diag#10700] pos_err=0.496839 rot_err=0.291903 |tau|=22927.4
+[HQPID diag#10800] pos_err=0.355977 rot_err=0.134768 |tau|=11484.9
+[HQPID diag#10900] pos_err=0.338135 rot_err=0.200344 |tau|=31584.9
+[HQPID diag#11000] pos_err=0.368928 rot_err=0.271452 |tau|=28413.5
+[HQPID diag#11100] pos_err=0.350966 rot_err=0.34701 |tau|=32879
+[HQPID diag#11200] pos_err=0.248252 rot_err=0.216157 |tau|=32731.9
+[HQPID diag#11300] pos_err=0.185213 rot_err=0.0608426 |tau|=30512.1
+[HQPID diag#11400] pos_err=0.45361 rot_err=0.1702 |tau|=30480.4
+[HQPID diag#11500] pos_err=0.82016 rot_err=0.191105 |tau|=38769.2
+[HQPID diag#11600] pos_err=1.0267 rot_err=0.2461 |tau|=39593.1
+[HQPID diag#11700] pos_err=0.896771 rot_err=0.15902 |tau|=14736.2
+[HQPID diag#11800] pos_err=0.610345 rot_err=0.0784283 |tau|=14891.2
+[HQPID diag#11900] pos_err=0.30266 rot_err=0.299494 |tau|=14933.2
+[HQPID diag#12000] pos_err=0.151583 rot_err=0.448438 |tau|=14941.3
+[HQPID diag#12100] pos_err=0.461115 rot_err=0.523348 |tau|=14926.6
+[HQPID diag#12200] pos_err=0.787843 rot_err=0.601204 |tau|=4680.87
+[HQPID diag#12300] pos_err=0.992732 rot_err=0.7538 |tau|=41117.1
+[HQPID diag#12400] pos_err=0.983073 rot_err=0.868637 |tau|=39105.3
+[HQPID diag#12500] pos_err=0.748012 rot_err=0.86361 |tau|=38430.8
+[HQPID diag#12600] pos_err=0.413403 rot_err=0.704883 |tau|=15664.7
+还是起飞乱窜
+
+结果:好消息：没有任何 QP 报错了！ 行缩放修复了数值问题，QP 现在能正常求解。
+但现在的问题是控制不稳定——QP 解出了正确的力矩来实现期望加速度，但 Kp=40~60 对这个 500kg 机械臂太激进了，导致超调→反向误差更大→发散。
+需要降低任务空间增益并增大阻尼：
+同时增大阻尼权重，惩罚过大的加速度：
+同时收紧 QP 容差（行缩放改善了条件数，可以提高精度了）：
+加一个 QP 成功时的状态打印，确认是否真的 Solved：
+
+bot_grasp_project/code/ros_robot_controller/examples/C++/build$ ./dyros_robot_controller_example ur8_hqpid
+MuJoCo version 3.2.2
+[DIAG] MuJoCo actuators (nu=10):
+  joint_grasp_right -> ctrl[9]
+  joint_grasp_left -> ctrl[8]
+  joint8 -> ctrl[7]
+  joint6 -> ctrl[5]
+  joint5 -> ctrl[4]
+  joint3 -> ctrl[2]
+  joint2 -> ctrl[1]
+  joint7 -> ctrl[6]
+  joint4 -> ctrl[3]
+  joint1 -> ctrl[0]
+[dyros_robot_controller] URDF file loaded successfully!: /home/zhan/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/../robots/ur8/ur8.urdf
+[dyros_robot_controller] Packages folder does not exist! : 
+[dyros_robot_controller] Collision model for the robot may not be perfect!
+[dyros_robot_controller] SRDF file loaded successfully!: /home/zhan/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/../robots/ur8/ur8.srdf
+info: 
+Total nq = 10
+Total nv = 10
+
+ id | name                 | nq | nv | idx_q | idx_v
+----+----------------------+----+----+-------+------
+  1 |               joint1 |  1 |  1 |     0 |    0
+  2 |               joint2 |  1 |  1 |     1 |    1
+  3 |               joint3 |  1 |  1 |     2 |    2
+  4 |               joint4 |  1 |  1 |     3 |    3
+  5 |               joint5 |  1 |  1 |     4 |    4
+  6 |               joint6 |  1 |  1 |     5 |    5
+  7 |               joint7 |  1 |  1 |     6 |    6
+  8 |               joint8 |  1 |  1 |     7 |    7
+  9 |     joint_grasp_left |  1 |  1 |     8 |    8
+ 10 |    joint_grasp_right |  1 |  1 |     9 |    9
+
+[UR8 HQP] Arrows=Translate WASD=Rotate 1=Home 5=Knife
+Control Mode Changed: QPIK_Up
+[HQPID diag#100] pos_err=0.0686228 rot_err=0.0239335 |tau|=15014.8
+[HQPID diag#200] pos_err=0.102683 rot_err=0.0527224 |tau|=16766.9
+[HQPID diag#300] pos_err=0.137343 rot_err=0.0891741 |tau|=17451.2
+[HQPID diag#400] pos_err=0.164941 rot_err=0.13185 |tau|=16353.1
+[QP] status=Solved solve_t=0.176096ms
+[HQPID diag#500] pos_err=0.182389 rot_err=0.153861 |tau|=12563.9
+[HQPID diag#600] pos_err=0.183513 rot_err=0.142506 |tau|=8506.5
+[HQPID diag#700] pos_err=0.174421 rot_err=0.156886 |tau|=13576.9
+[HQPID diag#800] pos_err=0.164456 rot_err=0.170168 |tau|=8559.22
+[HQPID diag#900] pos_err=0.157328 rot_err=0.178863 |tau|=5740.25
+[QP] status=Solved solve_t=0.226901ms
+[HQPID diag#1000] pos_err=0.141816 rot_err=0.204062 |tau|=12902.8
+[HQPID diag#1100] pos_err=0.137862 rot_err=0.224335 |tau|=12648.5
+[HQPID diag#1200] pos_err=0.160218 rot_err=0.264119 |tau|=26672
+[HQPID diag#1300] pos_err=0.179521 rot_err=0.247781 |tau|=14695.1
+[HQPID diag#1400] pos_err=0.167854 rot_err=0.227565 |tau|=13238.5
+[QP] status=Solved solve_t=0.130252ms
+[HQPID diag#1500] pos_err=0.154462 rot_err=0.210362 |tau|=8449.04
+[HQPID diag#1600] pos_err=0.131063 rot_err=0.227893 |tau|=15078.4
+[HQPID diag#1700] pos_err=0.107218 rot_err=0.230503 |tau|=6917.72
+[HQPID diag#1800] pos_err=0.0730194 rot_err=0.26588 |tau|=13421.6
+[HQPID diag#1900] pos_err=0.057591 rot_err=0.254446 |tau|=6052.21
+[QP] status=Solved solve_t=0.152603ms
+[HQPID diag#2000] pos_err=0.063266 rot_err=0.216027 |tau|=4214.71
+[HQPID diag#2100] pos_err=0.119838 rot_err=0.195252 |tau|=24675.2
+[HQPID diag#2200] pos_err=0.173614 rot_err=0.197271 |tau|=20982.1
+[HQPID diag#2300] pos_err=0.173438 rot_err=0.179221 |tau|=3869.79
+[HQPID diag#2400] pos_err=0.18475 rot_err=0.192925 |tau|=13992.9
+[QP] status=Solved solve_t=0.039403ms
+[HQPID diag#2500] pos_err=0.180341 rot_err=0.190746 |tau|=9550.93
+[HQPID diag#2600] pos_err=0.15494 rot_err=0.216563 |tau|=14973.8
+[HQPID diag#2700] pos_err=0.118586 rot_err=0.224426 |tau|=3865.95
+[HQPID diag#2800] pos_err=0.109174 rot_err=0.211489 |tau|=3707.42
+[HQPID diag#2900] pos_err=0.109887 rot_err=0.217642 |tau|=11822.4
+[QP] status=Solved solve_t=0.090338ms
+[HQPID diag#3000] pos_err=0.101308 rot_err=0.205036 |tau|=9789.09
+[HQPID diag#3100] pos_err=0.104527 rot_err=0.207231 |tau|=28821.7
+[HQPID diag#3200] pos_err=0.109545 rot_err=0.197466 |tau|=4321.15
+[HQPID diag#3300] pos_err=0.109847 rot_err=0.197164 |tau|=7673.58
+[HQPID diag#3400] pos_err=0.118107 rot_err=0.188346 |tau|=17618.8
+[QP] status=Solved solve_t=0.039874ms
+[HQPID diag#3500] pos_err=0.119158 rot_err=0.180498 |tau|=7845.73
+Control Mode Changed: QPIK_Up
+[HQPID diag#3600] pos_err=0.0464258 rot_err=0.0127287 |tau|=4747.33
+[HQPID diag#3700] pos_err=0.0737496 rot_err=0.0190957 |tau|=7027.45
+[HQPID diag#3800] pos_err=0.113532 rot_err=0.0327536 |tau|=9019.55
+[HQPID diag#3900] pos_err=0.141572 rot_err=0.0512967 |tau|=10947.3
+[QP] status=Solved solve_t=0.083134ms
+[HQPID diag#4000] pos_err=0.16388 rot_err=0.0764128 |tau|=5235.64
+[HQPID diag#4100] pos_err=0.166413 rot_err=0.0898423 |tau|=13327.7
+[HQPID diag#4200] pos_err=0.160481 rot_err=0.079968 |tau|=8088.79
+[HQPID diag#4300] pos_err=0.159734 rot_err=0.0472899 |tau|=4166.52
+Control Mode Changed: QPIK_Up
+[HQPID diag#4400] pos_err=0.0484662 rot_err=0.00393176 |tau|=6318.37
+[QP] status=Solved solve_t=0.039724ms
+[HQPID diag#4500] pos_err=0.05336 rot_err=0.0133296 |tau|=23798.9
+[HQPID diag#4600] pos_err=0.0592488 rot_err=0.0217043 |tau|=5288.13
+[HQPID diag#4700] pos_err=0.0757668 rot_err=0.0398218 |tau|=14621.8
+[HQPID diag#4800] pos_err=0.0755365 rot_err=0.0204874 |tau|=11838.5
+[HQPID diag#4900] pos_err=0.0651054 rot_err=0.0107947 |tau|=5681.19
+Control Mode Changed: QPIK_Up
+[QP] status=Solved solve_t=0.040145ms
+[HQPID diag#5000] pos_err=0.0509108 rot_err=0.0083106 |tau|=6213.6
+[HQPID diag#5100] pos_err=0.0567126 rot_err=0.026208 |tau|=12519.2
+[HQPID diag#5200] pos_err=0.0641225 rot_err=0.031308 |tau|=3813.34
+[HQPID diag#5300] pos_err=0.0618576 rot_err=0.0090687 |tau|=19478.9
+[HQPID diag#5400] pos_err=0.0624713 rot_err=0.0156056 |tau|=13662.8
+Control Mode Changed: QPIK_Up
+[QP] status=Solved solve_t=0.066784ms
+[HQPID diag#5500] pos_err=0.0590671 rot_err=0.00410915 |tau|=8561.08
+[HQPID diag#5600] pos_err=0.0854598 rot_err=0.0247527 |tau|=10140.4
+[HQPID diag#5700] pos_err=0.0980599 rot_err=0.00903718 |tau|=25437.8
+[HQPID diag#5800] pos_err=0.113577 rot_err=0.011489 |tau|=10378
+Control Mode Changed: QPIK_Up
+[HQPID diag#5900] pos_err=0.0626506 rot_err=0.00607739 |tau|=12829.6
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#6000] pos_err=0.125413 rot_err=0.0647356 |tau|=13733.5
+[QP] status=Solved solve_t=0.088334ms
+[HQPID diag#6100] pos_err=0.177815 rot_err=0.0901055 |tau|=11340.1
+[HQPID diag#6200] pos_err=0.217541 rot_err=0.133376 |tau|=7433.65
+[HQPID diag#6300] pos_err=0.224852 rot_err=0.12693 |tau|=14451.2
+[HQPID diag#6400] pos_err=0.221858 rot_err=0.142872 |tau|=5816.48
+[HQPID diag#6500] pos_err=0.20507 rot_err=0.113239 |tau|=10643.5
+[QP] status=Solved solve_t=0.149197ms
+[HQPID diag#6600] pos_err=0.178646 rot_err=0.112117 |tau|=9047.32
+Solver interrupted
+[QP] FAILED: solveProblem returned error
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#6700] pos_err=0.147123 rot_err=0.0682797 |tau|=14083
+[HQPID diag#6800] pos_err=0.122659 rot_err=0.0497389 |tau|=29916.5
+[HQPID diag#6900] pos_err=0.102921 rot_err=0.0348743 |tau|=29395.3
+[HQPID diag#7000] pos_err=0.0866885 rot_err=0.0167736 |tau|=5666.9
+[QP] status=Solved solve_t=0.071222ms
+[HQPID diag#7100] pos_err=0.0754038 rot_err=0.0228774 |tau|=7808.26
+[HQPID diag#7200] pos_err=0.0899994 rot_err=0.024799 |tau|=7048.88
+[HQPID diag#7300] pos_err=0.10787 rot_err=0.0225081 |tau|=5686.4
+[HQPID diag#7400] pos_err=0.108162 rot_err=0.00990916 |tau|=13631.8
+[HQPID diag#7500] pos_err=0.106309 rot_err=0.0260966 |tau|=15215.4
+[QP] status=Solved solve_t=0.03785ms
+[HQPID diag#7600] pos_err=0.0987562 rot_err=0.0236538 |tau|=9321.6
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#7700] pos_err=0.0893448 rot_err=0.0332406 |tau|=11843.1
+[HQPID diag#7800] pos_err=0.0966269 rot_err=0.0037563 |tau|=8546.98
+[HQPID diag#7900] pos_err=0.0945492 rot_err=0.0143287 |tau|=15163.3
+[HQPID diag#8000] pos_err=0.0887025 rot_err=0.00782604 |tau|=21236.5
+[QP] status=Solved solve_t=0.043431ms
+[HQPID diag#8100] pos_err=0.0809666 rot_err=0.00867639 |tau|=6100.83
+[HQPID diag#8200] pos_err=0.0776022 rot_err=0.0122477 |tau|=5361.62
+[HQPID diag#8300] pos_err=0.0660158 rot_err=0.0310204 |tau|=7252.63
+[HQPID diag#8400] pos_err=0.0705371 rot_err=0.0211621 |tau|=11856.7
+[HQPID diag#8500] pos_err=0.0689943 rot_err=0.0220849 |tau|=19665.6
+[QP] status=Solved solve_t=0.090568ms
+[HQPID diag#8600] pos_err=0.0696648 rot_err=0.0152448 |tau|=4514.47
+[HQPID diag#8700] pos_err=0.0559714 rot_err=0.0269196 |tau|=10165.4
+[HQPID diag#8800] pos_err=0.0472681 rot_err=0.0354397 |tau|=16893.1
+[HQPID diag#8900] pos_err=0.0598404 rot_err=0.0156829 |tau|=7390.86
+不知道为什么现在机械臂没有在方针环境的中心,而是在边缘很远的地方,以至于我都无法缩放到最大
+
+分析结果：
+QP 基本 Solved（0.04-0.23ms）！行缩放成功修复了数值问题！
+偶然 MaxIterReached — 少数情况下 QP 仍失败
+位置误差 overshoot 严重：0.05m 目标 → 误差先涨到 0.18m 再慢慢振荡
+机械臂漂移到远处 — 不稳定运动累积导致，按 '1' 回 Home
+问题是阻尼不足。Kp=8, Kv=3 → 阻尼比 ζ = 3/(2√8) = 0.53，欠阻尼。需要增大 Kv 并减慢运动速度：
+同时加长 cubic 轨迹时间（更平缓的运动）和增大 max_iter：
+
+:~/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/build$ ./dyros_robot_controller_example ur8_hqpid
+MuJoCo version 3.2.2
+[DIAG] MuJoCo actuators (nu=10):
+  joint_grasp_right -> ctrl[9]
+  joint_grasp_left -> ctrl[8]
+  joint8 -> ctrl[7]
+  joint6 -> ctrl[5]
+  joint5 -> ctrl[4]
+  joint3 -> ctrl[2]
+  joint2 -> ctrl[1]
+  joint7 -> ctrl[6]
+  joint4 -> ctrl[3]
+  joint1 -> ctrl[0]
+[dyros_robot_controller] URDF file loaded successfully!: /home/zhan/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/../robots/ur8/ur8.urdf
+[dyros_robot_controller] Packages folder does not exist! : 
+[dyros_robot_controller] Collision model for the robot may not be perfect!
+[dyros_robot_controller] SRDF file loaded successfully!: /home/zhan/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/../robots/ur8/ur8.srdf
+info: 
+Total nq = 10
+Total nv = 10
+
+ id | name                 | nq | nv | idx_q | idx_v
+----+----------------------+----+----+-------+------
+  1 |               joint1 |  1 |  1 |     0 |    0
+  2 |               joint2 |  1 |  1 |     1 |    1
+  3 |               joint3 |  1 |  1 |     2 |    2
+  4 |               joint4 |  1 |  1 |     3 |    3
+  5 |               joint5 |  1 |  1 |     4 |    4
+  6 |               joint6 |  1 |  1 |     5 |    5
+  7 |               joint7 |  1 |  1 |     6 |    6
+  8 |               joint8 |  1 |  1 |     7 |    7
+  9 |     joint_grasp_left |  1 |  1 |     8 |    8
+ 10 |    joint_grasp_right |  1 |  1 |     9 |    9
+
+[UR8 HQP] Arrows=Translate WASD=Rotate 1=Home 5=Knife
+Control Mode Changed: QPIK_Up
+[HQPID diag#100] pos_err=0.0682346 rot_err=0.0191798 |tau|=9396.41
+[HQPID diag#200] pos_err=0.0897104 rot_err=0.0544342 |tau|=25225.5
+[HQPID diag#300] pos_err=0.105922 rot_err=0.0939933 |tau|=17884.9
+[HQPID diag#400] pos_err=0.11543 rot_err=0.140104 |tau|=13807
+[QP] status=Solved solve_t=0.077414ms
+[HQPID diag#500] pos_err=0.117538 rot_err=0.170434 |tau|=12346.4
+[HQPID diag#600] pos_err=0.112036 rot_err=0.165521 |tau|=6438.82
+[HQPID diag#700] pos_err=0.103898 rot_err=0.176205 |tau|=13704.6
+[HQPID diag#800] pos_err=0.0972773 rot_err=0.190165 |tau|=11824.3
+[HQPID diag#900] pos_err=0.0991345 rot_err=0.19498 |tau|=4194.7
+[QP] status=Solved solve_t=0.041177ms
+[HQPID diag#1000] pos_err=0.0967756 rot_err=0.218109 |tau|=10074.5
+[HQPID diag#1100] pos_err=0.0917902 rot_err=0.214252 |tau|=4988.92
+[HQPID diag#1200] pos_err=0.0772335 rot_err=0.231815 |tau|=9560.19
+[HQPID diag#1300] pos_err=0.0712687 rot_err=0.225972 |tau|=15589.5
+[HQPID diag#1400] pos_err=0.0728909 rot_err=0.245719 |tau|=10241.5
+[QP] status=Solved solve_t=0.045325ms
+[HQPID diag#1500] pos_err=0.0847039 rot_err=0.235604 |tau|=4262.31
+[HQPID diag#1600] pos_err=0.088735 rot_err=0.215352 |tau|=4001.31
+[HQPID diag#1700] pos_err=0.140843 rot_err=0.171092 |tau|=10977.5
+[HQPID diag#1800] pos_err=0.164866 rot_err=0.153333 |tau|=19087.6
+[HQPID diag#1900] pos_err=0.149781 rot_err=0.160362 |tau|=6481.32
+[QP] status=Solved solve_t=0.079017ms
+[HQPID diag#2000] pos_err=0.117942 rot_err=0.191443 |tau|=18060.1
+[HQPID diag#2100] pos_err=0.10593 rot_err=0.187994 |tau|=11668.4
+[HQPID diag#2200] pos_err=0.104558 rot_err=0.193079 |tau|=6263.63
+[HQPID diag#2300] pos_err=0.117947 rot_err=0.184567 |tau|=5377.42
+[HQPID diag#2400] pos_err=0.136338 rot_err=0.18523 |tau|=11879.1
+[QP] status=Solved solve_t=0.06983ms
+[HQPID diag#2500] pos_err=0.136652 rot_err=0.183415 |tau|=10411.5
+[HQPID diag#2600] pos_err=0.126802 rot_err=0.183163 |tau|=11593.4
+[HQPID diag#2700] pos_err=0.110981 rot_err=0.202291 |tau|=10199.4
+[HQPID diag#2800] pos_err=0.107897 rot_err=0.181204 |tau|=6562.51
+[HQPID diag#2900] pos_err=0.108993 rot_err=0.202059 |tau|=14974.2
+[QP] status=Solved solve_t=0.074549ms
+[HQPID diag#3000] pos_err=0.113135 rot_err=0.18754 |tau|=4059.72
+[HQPID diag#3100] pos_err=0.111226 rot_err=0.197521 |tau|=5436.58
+[HQPID diag#3200] pos_err=0.116846 rot_err=0.194333 |tau|=5071.18
+[HQPID diag#3300] pos_err=0.124401 rot_err=0.191265 |tau|=9348.23
+[HQPID diag#3400] pos_err=0.117973 rot_err=0.191785 |tau|=6319.52
+[QP] status=Solved solve_t=0.043552ms
+[HQPID diag#3500] pos_err=0.115393 rot_err=0.202656 |tau|=9691.13
+Control Mode Changed: QPIK_Up
+[HQPID diag#3600] pos_err=0.057159 rot_err=0.00478713 |tau|=4150.56
+[HQPID diag#3700] pos_err=0.0914233 rot_err=0.0162348 |tau|=13116.8
+[HQPID diag#3800] pos_err=0.125226 rot_err=0.0508793 |tau|=9739.02
+[HQPID diag#3900] pos_err=0.141098 rot_err=0.064032 |tau|=14657.7
+[QP] status=Solved solve_t=0.039333ms
+[HQPID diag#4000] pos_err=0.15967 rot_err=0.063937 |tau|=19695.1
+[HQPID diag#4100] pos_err=0.176185 rot_err=0.0734044 |tau|=6736.02
+[HQPID diag#4200] pos_err=0.197889 rot_err=0.0930817 |tau|=8669.32
+[HQPID diag#4300] pos_err=0.21207 rot_err=0.104056 |tau|=5934.82
+[HQPID diag#4400] pos_err=0.227074 rot_err=0.102915 |tau|=15514.3
+[QP] status=Solved solve_t=0.041467ms
+[HQPID diag#4500] pos_err=0.234759 rot_err=0.110638 |tau|=6522.98
+[HQPID diag#4600] pos_err=0.234261 rot_err=0.111968 |tau|=4088.55
+[HQPID diag#4700] pos_err=0.228763 rot_err=0.103026 |tau|=11315.6
+[HQPID diag#4800] pos_err=0.223635 rot_err=0.0988992 |tau|=13816.6
+[HQPID diag#4900] pos_err=0.214504 rot_err=0.0956008 |tau|=4080.57
+Control Mode Changed: QPIK_Up
+[QP] status=Solved solve_t=0.06977ms
+[HQPID diag#5000] pos_err=0.0451226 rot_err=0.0141625 |tau|=9561.21
+[HQPID diag#5100] pos_err=0.0419555 rot_err=0.0208301 |tau|=6851.05
+[HQPID diag#5200] pos_err=0.0408839 rot_err=0.0228712 |tau|=2342.54
+[HQPID diag#5300] pos_err=0.0319733 rot_err=0.025235 |tau|=15207.5
+[HQPID diag#5400] pos_err=0.0214131 rot_err=0.0347969 |tau|=8675.58
+[QP] status=Solved solve_t=0.035476ms
+[HQPID diag#5500] pos_err=0.0428489 rot_err=0.0395291 |tau|=24287.8
+Control Mode Changed: QPIK_Up
+[HQPID diag#5600] pos_err=0.0507353 rot_err=0.00251993 |tau|=6137.14
+[HQPID diag#5700] pos_err=0.0498733 rot_err=0.01761 |tau|=11771.4
+[HQPID diag#5800] pos_err=0.055177 rot_err=0.0193038 |tau|=8368.98
+[HQPID diag#5900] pos_err=0.0594517 rot_err=0.0103892 |tau|=2906.92
+[QP] status=Solved solve_t=0.094045ms
+[HQPID diag#6000] pos_err=0.0595776 rot_err=0.0134428 |tau|=13695.9
+[HQPID diag#6100] pos_err=0.0666161 rot_err=0.00485252 |tau|=3065.13
+Control Mode Changed: QPIK_Up
+[HQPID diag#6200] pos_err=0.050306 rot_err=0.00385642 |tau|=11039.8
+[HQPID diag#6300] pos_err=0.0491378 rot_err=0.00476454 |tau|=13172.7
+[HQPID diag#6400] pos_err=0.0545749 rot_err=0.0081282 |tau|=2902.19
+[QP] status=Solved solve_t=0.135703ms
+[HQPID diag#6500] pos_err=0.058518 rot_err=0.0105805 |tau|=12548.5
+[HQPID diag#6600] pos_err=0.0676968 rot_err=0.0129847 |tau|=6584.02
+[HQPID diag#6700] pos_err=0.0683696 rot_err=0.0057537 |tau|=9282.3
+[HQPID diag#6800] pos_err=0.0713989 rot_err=0.0196371 |tau|=10448.7
+Control Mode Changed: QPIK_Up
+[HQPID diag#6900] pos_err=0.0506655 rot_err=0.0035775 |tau|=3832.78
+[QP] status=Solved solve_t=0.04302ms
+[HQPID diag#7000] pos_err=0.0460035 rot_err=0.0143688 |tau|=14468.3
+[HQPID diag#7100] pos_err=0.0489714 rot_err=0.00848749 |tau|=3688.8
+[HQPID diag#7200] pos_err=0.0512069 rot_err=0.0130411 |tau|=8981.73
+[HQPID diag#7300] pos_err=0.0590552 rot_err=0.0153246 |tau|=11375.4
+[HQPID diag#7400] pos_err=0.0709703 rot_err=0.00527912 |tau|=4597.92
+[QP] status=Solved solve_t=0.041177ms
+[HQPID diag#7500] pos_err=0.0812132 rot_err=0.0173248 |tau|=4957.63
+Control Mode Changed: QPIK_Up
+[HQPID diag#7600] pos_err=0.0491661 rot_err=0.00412152 |tau|=17079
+[HQPID diag#7700] pos_err=0.053786 rot_err=0.016072 |tau|=2885.94
+[HQPID diag#7800] pos_err=0.0496129 rot_err=0.0108615 |tau|=11234.2
+[HQPID diag#7900] pos_err=0.0510519 rot_err=0.00961011 |tau|=5809.21
+[QP] status=Solved solve_t=0.045976ms
+[HQPID diag#8000] pos_err=0.0432701 rot_err=0.00441163 |tau|=19975.2
+[HQPID diag#8100] pos_err=0.0306651 rot_err=0.0205832 |tau|=15890
+[HQPID diag#8200] pos_err=0.0262899 rot_err=0.0248633 |tau|=4608.92
+[HQPID diag#8300] pos_err=0.0298027 rot_err=0.0335254 |tau|=2018.78
+[HQPID diag#8400] pos_err=0.0316811 rot_err=0.0464357 |tau|=18131.4
+[QP] status=Solved solve_t=0.076092ms
+[HQPID diag#8500] pos_err=0.043401 rot_err=0.0441851 |tau|=2803.22
+[HQPID diag#8600] pos_err=0.0499754 rot_err=0.0534588 |tau|=11476.8
+[HQPID diag#8700] pos_err=0.0545405 rot_err=0.0577479 |tau|=31037.6
+[HQPID diag#8800] pos_err=0.0616409 rot_err=0.0688935 |tau|=17972.2
+[HQPID diag#8900] pos_err=0.0695952 rot_err=0.0626495 |tau|=9346.98
+Control Mode Changed: QPIK_Up
+[QP] status=Solved solve_t=0.073437ms
+[HQPID diag#9000] pos_err=0.0606376 rot_err=0.0213144 |tau|=29278.4
+[HQPID diag#9100] pos_err=0.0659765 rot_err=0.013658 |tau|=12540.4
+[HQPID diag#9200] pos_err=0.0678954 rot_err=0.0142152 |tau|=19476.1
+Control Mode Changed: QPIK_Up
+[HQPID diag#9300] pos_err=0.0498842 rot_err=0.000635177 |tau|=3102.03
+[HQPID diag#9400] pos_err=0.0524566 rot_err=0.00967128 |tau|=7126.33
+[QP] status=Solved solve_t=0.196606ms
+[HQPID diag#9500] pos_err=0.0465005 rot_err=0.00901422 |tau|=13119.2
+[HQPID diag#9600] pos_err=0.0406342 rot_err=0.00700736 |tau|=9846.07
+[QP] WARNING: TimeLimitReached (solve_t=49.9648ms), using best-effort solution
+[HQPID diag#9700] pos_err=0.0361661 rot_err=0.0116014 |tau|=3436.1
+[HQPID diag#9800] pos_err=0.0300564 rot_err=0.0357911 |tau|=8407.73
+[HQPID diag#9900] pos_err=0.0421344 rot_err=0.015081 |tau|=5967.11
+[QP] status=Solved solve_t=0.069459ms
+[HQPID diag#10000] pos_err=0.0380875 rot_err=0.0187686 |tau|=15968
+Control Mode Changed: QPIK_Up
+[HQPID diag#10100] pos_err=0.0456204 rot_err=0.00513305 |tau|=8909.5
+[HQPID diag#10200] pos_err=0.0381519 rot_err=0.0217332 |tau|=13079.1
+[HQPID diag#10300] pos_err=0.0328623 rot_err=0.0264307 |tau|=12982.9
+[HQPID diag#10400] pos_err=0.0315195 rot_err=0.0145761 |tau|=2372.5
+Control Mode Changed: QPIK_Up
+[QP] status=Solved solve_t=0.109494ms
+[HQPID diag#10500] pos_err=0.043771 rot_err=0.0165013 |tau|=5358.68
+[QP] WARNING: TimeLimitReached (solve_t=49.9601ms), using best-effort solution
+[HQPID diag#10600] pos_err=0.032871 rot_err=0.0280039 |tau|=16990.1
+Control Mode Changed: QPIK_Up
+[QP] WARNING: TimeLimitReached (solve_t=49.9648ms), using best-effort solution
+[HQPID diag#10700] pos_err=0.0494842 rot_err=0.0136411 |tau|=12802.4
+[HQPID diag#10800] pos_err=0.0554474 rot_err=0.0136383 |tau|=11474.8
+[HQPID diag#10900] pos_err=0.0556887 rot_err=0.0072425 |tau|=14517.5
+[QP] status=Solved solve_t=0.037931ms
+[HQPID diag#11000] pos_err=0.0501534 rot_err=0.0134372 |tau|=3430.21
+[HQPID diag#11100] pos_err=0.041318 rot_err=0.00723479 |tau|=15255.7
+Control Mode Changed: QPIK_Up
+[HQPID diag#11200] pos_err=0.0599781 rot_err=0.019659 |tau|=4482.13
+[HQPID diag#11300] pos_err=0.0648919 rot_err=0.00897334 |tau|=16444.2
+[HQPID diag#11400] pos_err=0.07444 rot_err=0.0142754 |tau|=21106.5
+[QP] status=Solved solve_t=0.223366ms
+[HQPID diag#11500] pos_err=0.0833592 rot_err=0.0319665 |tau|=12513.9
+我点击键盘向上按键,末端基本没有抬升,是求解错误还是参数问题,另为机械臂软绵绵的一直大幅度颤动
+
+Let me also think about whether there's a units issue. The task_id_kp is in task space (m/s² per m = 1/s²), while the qpid damping is in joint space. The Jacobian maps between them. For a 1m lever arm:
+
+1 m/s² EE acceleration ≈ 1 rad/s² joint acceleration (for a revolute joint 1m from EE)
+So the task and joint space units are roughly comparable
+Kp=3 means 3 (m/s²)/m. For 0.05m error: 0.15 m/s². The joint qddot to achieve this is approximately 0.15 rad/s². The damping penalty on qddot is 0.2 * 0.15² = 0.0045. The tracking cost is 20 * (0.15 - 0.15)² = 0 (at the optimum). So the QP should find the right solution.
+
+OK let me just make the changes and test.分析数据后发现：
+
+QP 大多 Solved（~0.04-0.22ms）—行缩放成功
+偶尔 TimeLimitReached（正好 50ms）—时间限制设太短了
+误差从 0.05 涨到 0.23（460% overshoot）—增益仍然太激进
+Kp=8 对 500kg 手臂来说还是太硬，需要大幅降低
+彻底调整参数策略：极软增益 + 提高 QP 跟踪权重 + 减少阻尼 + 加长时间限制：
+
+zhan@ubuntu22:~/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/build$ ./dyros_robot_controller_example ur8_hqpid
+MuJoCo version 3.2.2
+[DIAG] MuJoCo actuators (nu=10):
+  joint_grasp_right -> ctrl[9]
+  joint_grasp_left -> ctrl[8]
+  joint8 -> ctrl[7]
+  joint6 -> ctrl[5]
+  joint5 -> ctrl[4]
+  joint3 -> ctrl[2]
+  joint2 -> ctrl[1]
+  joint7 -> ctrl[6]
+  joint4 -> ctrl[3]
+  joint1 -> ctrl[0]
+[dyros_robot_controller] URDF file loaded successfully!: /home/zhan/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/../robots/ur8/ur8.urdf
+[dyros_robot_controller] Packages folder does not exist! : 
+[dyros_robot_controller] Collision model for the robot may not be perfect!
+[dyros_robot_controller] SRDF file loaded successfully!: /home/zhan/Projects/robot_grasp_project/code/ros_robot_controller/examples/C++/../robots/ur8/ur8.srdf
+info: 
+Total nq = 10
+Total nv = 10
+
+ id | name                 | nq | nv | idx_q | idx_v
+----+----------------------+----+----+-------+------
+  1 |               joint1 |  1 |  1 |     0 |    0
+  2 |               joint2 |  1 |  1 |     1 |    1
+  3 |               joint3 |  1 |  1 |     2 |    2
+  4 |               joint4 |  1 |  1 |     3 |    3
+  5 |               joint5 |  1 |  1 |     4 |    4
+  6 |               joint6 |  1 |  1 |     5 |    5
+  7 |               joint7 |  1 |  1 |     6 |    6
+  8 |               joint8 |  1 |  1 |     7 |    7
+  9 |     joint_grasp_left |  1 |  1 |     8 |    8
+ 10 |    joint_grasp_right |  1 |  1 |     9 |    9
+
+[UR8 HQP] Arrows=Translate WASD=Rotate 1=Home 5=Knife
+Control Mode Changed: QPIK_Up
+[HQPID diag#100] pos_err=0.0589932 rot_err=0.0353607 |tau|=5607.75
+[HQPID diag#200] pos_err=0.0908951 rot_err=0.0572741 |tau|=33411.5
+[HQPID diag#300] pos_err=0.113571 rot_err=0.0861144 |tau|=31562.3
+[HQPID diag#400] pos_err=0.135957 rot_err=0.125092 |tau|=10886.2
+[QP] status=Solved solve_t=0.070111ms
+[HQPID diag#500] pos_err=0.15772 rot_err=0.158408 |tau|=13040.4
+[HQPID diag#600] pos_err=0.180075 rot_err=0.152678 |tau|=21368.3
+[HQPID diag#700] pos_err=0.199011 rot_err=0.147072 |tau|=31534.2
+[HQPID diag#800] pos_err=0.213511 rot_err=0.14904 |tau|=32193.1
+[HQPID diag#900] pos_err=0.223981 rot_err=0.146718 |tau|=10989.5
+[QP] status=Solved solve_t=0.180226ms
+[HQPID diag#1000] pos_err=0.225903 rot_err=0.143032 |tau|=10523.6
+[HQPID diag#1100] pos_err=0.228421 rot_err=0.143602 |tau|=7817.17
+[HQPID diag#1200] pos_err=0.230542 rot_err=0.152886 |tau|=5860.78
+[HQPID diag#1300] pos_err=0.229253 rot_err=0.17764 |tau|=15168.9
+[HQPID diag#1400] pos_err=0.245339 rot_err=0.187485 |tau|=4760.16
+[QP] status=Solved solve_t=0.046948ms
+[HQPID diag#1500] pos_err=0.261502 rot_err=0.209288 |tau|=16355.3
+[HQPID diag#1600] pos_err=0.289066 rot_err=0.222672 |tau|=9932.94
+[HQPID diag#1700] pos_err=0.303686 rot_err=0.223677 |tau|=18436.5
+[HQPID diag#1800] pos_err=0.304901 rot_err=0.237955 |tau|=15171.2
+[HQPID diag#1900] pos_err=0.29601 rot_err=0.241764 |tau|=9033
+[QP] status=Solved solve_t=0.039203ms
+[HQPID diag#2000] pos_err=0.281018 rot_err=0.237032 |tau|=4003.13
+[HQPID diag#2100] pos_err=0.275412 rot_err=0.25369 |tau|=20299.3
+[HQPID diag#2200] pos_err=0.270451 rot_err=0.264941 |tau|=13670
+[HQPID diag#2300] pos_err=0.262411 rot_err=0.280839 |tau|=12710
+[HQPID diag#2400] pos_err=0.268651 rot_err=0.276901 |tau|=4927.93
+[QP] status=Solved solve_t=0.410186ms
+[HQPID diag#2500] pos_err=0.266175 rot_err=0.288734 |tau|=14421.5
+[HQPID diag#2600] pos_err=0.260614 rot_err=0.301789 |tau|=14057.4
+[HQPID diag#2700] pos_err=0.268474 rot_err=0.308547 |tau|=30136.2
+[HQPID diag#2800] pos_err=0.272443 rot_err=0.314814 |tau|=12976.9
+[HQPID diag#2900] pos_err=0.266701 rot_err=0.304952 |tau|=30583
+[QP] status=Solved solve_t=0.04278ms
+[HQPID diag#3000] pos_err=0.26167 rot_err=0.290111 |tau|=20638.9
+[HQPID diag#3100] pos_err=0.255931 rot_err=0.287988 |tau|=16522.1
+[HQPID diag#3200] pos_err=0.25781 rot_err=0.315264 |tau|=31535.4
+[HQPID diag#3300] pos_err=0.265113 rot_err=0.305638 |tau|=7140.48
+[HQPID diag#3400] pos_err=0.267222 rot_err=0.31677 |tau|=14047
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#3500] pos_err=0.258148 rot_err=0.318384 |tau|=9380.47
+[QP] status=Solved solve_t=0.033904ms
+[HQPID diag#3600] pos_err=0.240063 rot_err=0.297813 |tau|=15329.7
+[HQPID diag#3700] pos_err=0.222476 rot_err=0.289208 |tau|=8523.93
+[HQPID diag#3800] pos_err=0.2079 rot_err=0.288162 |tau|=19008.9
+[HQPID diag#3900] pos_err=0.196649 rot_err=0.287329 |tau|=16977.3
+[HQPID diag#4000] pos_err=0.184894 rot_err=0.294515 |tau|=10835.6
+[QP] status=Solved solve_t=0.115907ms
+[HQPID diag#4100] pos_err=0.178847 rot_err=0.29154 |tau|=25469.9
+Control Mode Changed: QPIK_Up
+[HQPID diag#4200] pos_err=0.0473931 rot_err=0.00657022 |tau|=6216.61
+[HQPID diag#4300] pos_err=0.046922 rot_err=0.00394187 |tau|=9642.79
+[HQPID diag#4400] pos_err=0.0542746 rot_err=0.00906269 |tau|=19254.9
+[HQPID diag#4500] pos_err=0.0606109 rot_err=0.0165942 |tau|=18560
+[QP] status=Solved solve_t=0.049732ms
+[HQPID diag#4600] pos_err=0.0587333 rot_err=0.015341 |tau|=12556.5
+[HQPID diag#4700] pos_err=0.0519377 rot_err=0.00920705 |tau|=7495.58
+Control Mode Changed: QPIK_Down
+[HQPID diag#4800] pos_err=0.0492936 rot_err=0.00421033 |tau|=6035.44
+[HQPID diag#4900] pos_err=0.0502778 rot_err=0.00872845 |tau|=16988.5
+[HQPID diag#5000] pos_err=0.0450118 rot_err=0.00753757 |tau|=23735.2
+[QP] status=Solved solve_t=0.069439ms
+[HQPID diag#5100] pos_err=0.0414697 rot_err=0.0105716 |tau|=22953.6
+[HQPID diag#5200] pos_err=0.0463979 rot_err=0.0170899 |tau|=19617.9
+[HQPID diag#5300] pos_err=0.0646675 rot_err=0.0183309 |tau|=6209.72
+[HQPID diag#5400] pos_err=0.0894187 rot_err=0.026568 |tau|=11096.4
+[HQPID diag#5500] pos_err=0.107341 rot_err=0.0318556 |tau|=8466.15
+[QP] status=Solved solve_t=0.288177ms
+[HQPID diag#5600] pos_err=0.116503 rot_err=0.0288875 |tau|=12662.1
+[HQPID diag#5700] pos_err=0.122204 rot_err=0.0246535 |tau|=6862.26
+[HQPID diag#5800] pos_err=0.130277 rot_err=0.0233668 |tau|=9519.26
+[HQPID diag#5900] pos_err=0.147676 rot_err=0.0290616 |tau|=4653.7
+[HQPID diag#6000] pos_err=0.154535 rot_err=0.0268846 |tau|=13086.7
+[QP] status=Solved solve_t=0.035255ms
+[HQPID diag#6100] pos_err=0.157065 rot_err=0.0231707 |tau|=6113.05
+[HQPID diag#6200] pos_err=0.160145 rot_err=0.021741 |tau|=6190.42
+[HQPID diag#6300] pos_err=0.162527 rot_err=0.0238151 |tau|=5725.39
+[HQPID diag#6400] pos_err=0.163036 rot_err=0.0245533 |tau|=6053.99
+[HQPID diag#6500] pos_err=0.162732 rot_err=0.0282319 |tau|=10700.1
+[QP] status=Solved solve_t=0.070391ms
+[HQPID diag#6600] pos_err=0.160996 rot_err=0.0442416 |tau|=7961.11
+Control Mode Changed: QPIK_Down
+[HQPID diag#6700] pos_err=0.0475833 rot_err=0.00778112 |tau|=12441.9
+[HQPID diag#6800] pos_err=0.043714 rot_err=0.0082235 |tau|=11493.4
+[HQPID diag#6900] pos_err=0.0349898 rot_err=0.0185487 |tau|=15137.3
+[HQPID diag#7000] pos_err=0.0202825 rot_err=0.0398832 |tau|=7328.36
+[QP] status=Solved solve_t=0.075571ms
+[HQPID diag#7100] pos_err=0.00852019 rot_err=0.0514734 |tau|=5036.02
+[HQPID diag#7200] pos_err=0.0110601 rot_err=0.0550829 |tau|=14812.3
+[HQPID diag#7300] pos_err=0.0191948 rot_err=0.0746972 |tau|=6372.35
+[HQPID diag#7400] pos_err=0.0280158 rot_err=0.088316 |tau|=4818.01
+[HQPID diag#7500] pos_err=0.0359303 rot_err=0.0983893 |tau|=12210.4
+[QP] status=Solved solve_t=0.071133ms
+[HQPID diag#7600] pos_err=0.0437327 rot_err=0.104923 |tau|=6281.84
+[HQPID diag#7700] pos_err=0.0486961 rot_err=0.112163 |tau|=10293.9
+[HQPID diag#7800] pos_err=0.0516218 rot_err=0.117287 |tau|=8419.28
+[HQPID diag#7900] pos_err=0.0554075 rot_err=0.121509 |tau|=20810.5
+[HQPID diag#8000] pos_err=0.0595135 rot_err=0.128128 |tau|=17042.3
+[QP] status=Solved solve_t=0.036087ms
+[HQPID diag#8100] pos_err=0.0632841 rot_err=0.134167 |tau|=14456.7
+[HQPID diag#8200] pos_err=0.0634911 rot_err=0.134204 |tau|=4471.33
+[HQPID diag#8300] pos_err=0.0625401 rot_err=0.134475 |tau|=31280.9
+[HQPID diag#8400] pos_err=0.0658105 rot_err=0.135223 |tau|=5827.69
+[HQPID diag#8500] pos_err=0.0679442 rot_err=0.13327 |tau|=7350.97
+[QP] status=Solved solve_t=0.213098ms
+Control Mode Changed: QPIK_Down
+[HQPID diag#8600] pos_err=0.0496918 rot_err=0.00114624 |tau|=33923.3
+[HQPID diag#8700] pos_err=0.0529066 rot_err=0.00121371 |tau|=31486.7
+[HQPID diag#8800] pos_err=0.0568952 rot_err=0.00601998 |tau|=9089.41
+[HQPID diag#8900] pos_err=0.059895 rot_err=0.00415175 |tau|=22048.6
+[HQPID diag#9000] pos_err=0.06347 rot_err=0.00263687 |tau|=31240.1
+[QP] status=Solved solve_t=0.068598ms
+[HQPID diag#9100] pos_err=0.0700771 rot_err=0.00180942 |tau|=27770.4
+[HQPID diag#9200] pos_err=0.0773613 rot_err=0.00130423 |tau|=6549.92
+[HQPID diag#9300] pos_err=0.0830432 rot_err=0.00213456 |tau|=3138.13
+[HQPID diag#9400] pos_err=0.0902378 rot_err=0.00335959 |tau|=3966.79
+[HQPID diag#9500] pos_err=0.0998401 rot_err=0.0102993 |tau|=5079.36
+[QP] status=Solved solve_t=0.037931ms
+[HQPID diag#9600] pos_err=0.107836 rot_err=0.0182214 |tau|=13746.4
+[HQPID diag#9700] pos_err=0.114449 rot_err=0.0218474 |tau|=20080.8
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#9800] pos_err=0.11901 rot_err=0.0147495 |tau|=9435.03
+[HQPID diag#9900] pos_err=0.12261 rot_err=0.0178181 |tau|=26303.5
+[HQPID diag#10000] pos_err=0.124229 rot_err=0.00802081 |tau|=3658.34
+[QP] status=Solved solve_t=0.075671ms
+[HQPID diag#10100] pos_err=0.126623 rot_err=0.00898205 |tau|=5837.93
+[HQPID diag#10200] pos_err=0.131354 rot_err=0.018065 |tau|=20478.6
+[HQPID diag#10300] pos_err=0.131526 rot_err=0.0130087 |tau|=15991.4
+Control Mode Changed: QPIK_Up
+[HQPID diag#10400] pos_err=0.0512748 rot_err=0.00421378 |tau|=21660.1
+[HQPID diag#10500] pos_err=0.0458328 rot_err=0.00587001 |tau|=20442
+[QP] status=Solved solve_t=0.046227ms
+[HQPID diag#10600] pos_err=0.0434563 rot_err=0.008874 |tau|=18460.1
+[HQPID diag#10700] pos_err=0.0427449 rot_err=0.00424941 |tau|=10427.9
+[HQPID diag#10800] pos_err=0.037421 rot_err=0.0120948 |tau|=19937.3
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#10900] pos_err=0.0344401 rot_err=0.0154199 |tau|=7644.78
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#11000] pos_err=0.0295873 rot_err=0.0155281 |tau|=25252.3
+[QP] status=Solved solve_t=0.564453ms
+[HQPID diag#11100] pos_err=0.0227798 rot_err=0.0221791 |tau|=23172.9
+[HQPID diag#11200] pos_err=0.018655 rot_err=0.0231416 |tau|=14809.6
+[HQPID diag#11300] pos_err=0.0183255 rot_err=0.0269964 |tau|=7368.47
+[HQPID diag#11400] pos_err=0.0229658 rot_err=0.0357403 |tau|=7779.86
+Control Mode Changed: QPIK_Up
+[HQPID diag#11500] pos_err=0.0600002 rot_err=0.0126092 |tau|=16503.6
+[QP] status=Solved solve_t=0.034785ms
+[HQPID diag#11600] pos_err=0.0685507 rot_err=0.0146977 |tau|=9483.38
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#11700] pos_err=0.0782441 rot_err=0.0251505 |tau|=10866.7
+[HQPID diag#11800] pos_err=0.0819786 rot_err=0.0210394 |tau|=7985.75
+[HQPID diag#11900] pos_err=0.0835098 rot_err=0.012172 |tau|=18515.7
+[HQPID diag#12000] pos_err=0.0869519 rot_err=0.0135717 |tau|=20231.1
+[QP] status=Solved solve_t=0.142947ms
+[HQPID diag#12100] pos_err=0.0896108 rot_err=0.0102381 |tau|=12767.2
+[HQPID diag#12200] pos_err=0.0925949 rot_err=0.0136129 |tau|=3955.65
+[HQPID diag#12300] pos_err=0.0941812 rot_err=0.00297869 |tau|=6944.25
+[HQPID diag#12400] pos_err=0.0970164 rot_err=0.00378245 |tau|=16060.3
+[HQPID diag#12500] pos_err=0.108286 rot_err=0.0172851 |tau|=27377.7
+[QP] status=Solved solve_t=0.050724ms
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#12600] pos_err=0.113553 rot_err=0.0137791 |tau|=7949.18
+[HQPID diag#12700] pos_err=0.114085 rot_err=0.0152978 |tau|=7804.65
+Control Mode Changed: QPIK_Up
+[HQPID diag#12800] pos_err=0.0436745 rot_err=0.0161484 |tau|=32734.2
+[HQPID diag#12900] pos_err=0.040894 rot_err=0.0159525 |tau|=33769.5
+[HQPID diag#13000] pos_err=0.0434046 rot_err=0.00766487 |tau|=17755.4
+[QP] status=Solved solve_t=0.035647ms
+[HQPID diag#13100] pos_err=0.0496427 rot_err=0.000864218 |tau|=9258.9
+[HQPID diag#13200] pos_err=0.0530732 rot_err=0.0024096 |tau|=19798.5
+[HQPID diag#13300] pos_err=0.0572338 rot_err=0.00360555 |tau|=5072.98
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#13400] pos_err=0.0581351 rot_err=0.00550244 |tau|=16608.9
+[HQPID diag#13500] pos_err=0.0542208 rot_err=0.00901563 |tau|=8620.81
+[QP] status=Solved solve_t=0.045454ms
+[HQPID diag#13600] pos_err=0.0485031 rot_err=0.0158348 |tau|=33811.5
+[HQPID diag#13700] pos_err=0.0539348 rot_err=0.00554609 |tau|=22847.6
+[HQPID diag#13800] pos_err=0.0483264 rot_err=0.00662734 |tau|=18058.8
+[HQPID diag#13900] pos_err=0.0460986 rot_err=0.0157219 |tau|=33409.3
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#14000] pos_err=0.0449573 rot_err=0.0140619 |tau|=28400.8
+[QP] status=Solved solve_t=0.311051ms
+[HQPID diag#14100] pos_err=0.0496907 rot_err=0.00322197 |tau|=28800.8
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#14200] pos_err=0.051363 rot_err=0.00376234 |tau|=8440.11
+[HQPID diag#14300] pos_err=0.0508612 rot_err=0.00620218 |tau|=24913.8
+[HQPID diag#14400] pos_err=0.0519092 rot_err=0.00714514 |tau|=9206.23
+Control Mode Changed: QPIK_Up
+[HQPID diag#14500] pos_err=0.0432135 rot_err=0.0157467 |tau|=32908.2
+[QP] status=Solved solve_t=0.104485ms
+[HQPID diag#14600] pos_err=0.0376961 rot_err=0.0273266 |tau|=41475.9
+[HQPID diag#14700] pos_err=0.0440639 rot_err=0.0329996 |tau|=6812.69
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#14800] pos_err=0.053638 rot_err=0.0503016 |tau|=31930.8
+[HQPID diag#14900] pos_err=0.0651602 rot_err=0.0527786 |tau|=13830.3
+[HQPID diag#15000] pos_err=0.0771158 rot_err=0.0615212 |tau|=16663
+[QP] status=Solved solve_t=0.036388ms
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#15100] pos_err=0.0906763 rot_err=0.0692621 |tau|=5891.81
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#15200] pos_err=0.104083 rot_err=0.0908956 |tau|=36443
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#15300] pos_err=0.11246 rot_err=0.0744094 |tau|=12087.7
+[HQPID diag#15400] pos_err=0.127538 rot_err=0.103922 |tau|=17977.6
+[HQPID diag#15500] pos_err=0.146013 rot_err=0.112329 |tau|=6420.29
+[QP] status=Solved solve_t=0.077365ms
+[HQPID diag#15600] pos_err=0.158484 rot_err=0.125048 |tau|=37907.9
+[HQPID diag#15700] pos_err=0.166511 rot_err=0.147279 |tau|=31150.3
+[HQPID diag#15800] pos_err=0.154778 rot_err=0.125021 |tau|=29605.6
+[HQPID diag#15900] pos_err=0.142612 rot_err=0.115815 |tau|=10426.6
+[HQPID diag#16000] pos_err=0.128958 rot_err=0.113165 |tau|=16180.4
+[QP] status=Solved solve_t=0.033833ms
+[HQPID diag#16100] pos_err=0.116261 rot_err=0.107677 |tau|=27524.1
+[HQPID diag#16200] pos_err=0.104398 rot_err=0.110587 |tau|=15927.9
+[HQPID diag#16300] pos_err=0.0801031 rot_err=0.112799 |tau|=19053.1
+Control Mode Changed: QPIK_Up
+[QP] FAILED: status=MaxIterReached
+[HQP_ID_base] QP solve failed.
+[HQPID] level 0 solve failed, stopping hierarchy.
+[HQPID diag#16400] pos_err=0.0632849 rot_err=0.0238603 |tau|=11947
+[HQPID diag#16500] pos_err=0.0764845 rot_err=0.0247081 |tau|=12355.7
+[QP] status=Solved solve_t=0.628142ms
+[HQPID diag#16600] pos_err=0.0965338 rot_err=0.0433921 |tau|=5326.08
+[HQPID diag#16700] pos_err=0.116785 rot_err=0.0631477 |tau|=21329.4
+[HQPID diag#16800] pos_err=0.131262 rot_err=0.0689521 |tau|=21074.5
+[HQPID diag#16900] pos_err=0.150061 rot_err=0.0777769 |tau|=22947.8
+[HQPID diag#17000] pos_err=0.174885 rot_err=0.0975326 |tau|=17821.3
+[QP] status=Solved solve_t=0.06949ms
+[HQPID diag#17100] pos_err=0.198848 rot_err=0.122225 |tau|=5127.29
+[HQPID diag#17200] pos_err=0.219412 rot_err=0.138713 |tau|=16499.3
+[HQPID diag#17300] pos_err=0.236443 rot_err=0.154116 |tau|=30485.7
+[HQPID diag#17400] pos_err=0.24802 rot_err=0.163737 |tau|=11440
+[HQPID diag#17500] pos_err=0.255119 rot_err=0.13339 |tau|=14404.8
+[QP] status=Solved solve_t=0.897324ms
+[HQPID diag#17600] pos_err=0.292195 rot_err=0.171212 |tau|=10081.3
+[HQPID diag#17700] pos_err=0.3254 rot_err=0.195558 |tau|=37231.5
+[HQPID diag#17800] pos_err=0.348474 rot_err=0.213056 |tau|=18601.6
+[HQPID diag#17900] pos_err=0.355386 rot_err=0.213698 |tau|=26348.7
+[HQPID diag#18000] pos_err=0.352504 rot_err=0.214985 |tau|=14733.1
+[QP] status=Solved solve_t=0.127507ms
+[HQPID diag#18100] pos_err=0.340765 rot_err=0.207969 |tau|=14391.7
+[HQPID diag#18200] pos_err=0.328192 rot_err=0.202264 |tau|=30682.1
+[HQPID diag#18300] pos_err=0.312564 rot_err=0.185059 |tau|=11401.7
+[HQPID diag#18400] pos_err=0.297205 rot_err=0.175871 |tau|=26228.1
+[HQPID diag#18500] pos_err=0.27394 rot_err=0.152584 |tau|=31117.9
+[QP] status=Solved solve_t=0.047268ms
+[HQPID diag#18600] pos_err=0.253275 rot_err=0.134519 |tau|=5896.86
+[HQPID diag#18700] pos_err=0.23201 rot_err=0.119947 |tau|=15167.7
+[HQPID diag#18800] pos_err=0.200274 rot_err=0.095142 |tau|=3187
+[HQPID diag#18900] pos_err=0.164188 rot_err=0.0563056 |tau|=14900
+[HQPID diag#19000] pos_err=0.140828 rot_err=0.051401 |tau|=6171.24
+[QP] status=Solved solve_t=0.06444ms
+[HQPID diag#19100] pos_err=0.13833 rot_err=0.0790061 |tau|=8955.71
+[HQPID diag#19200] pos_err=0.127219 rot_err=0.052652 |tau|=12488
+[HQPID diag#19300] pos_err=0.140138 rot_err=0.0664184 |tau|=6752.17
+[HQPID diag#19400] pos_err=0.172485 rot_err=0.0962276 |tau|=16812.6
+[HQPID diag#19500] pos_err=0.187082 rot_err=0.101571 |tau|=38243.6
+[QP] status=Solved solve_t=0.435422ms
+[HQPID diag#19600] pos_err=0.192752 rot_err=0.105357 |tau|=27379.1
+[HQPID diag#19700] pos_err=0.19818 rot_err=0.11587 |tau|=30892.4
+[HQPID diag#19800] pos_err=0.200294 rot_err=0.122099 |tau|=7232.72
+[HQPID diag#19900] pos_err=0.190576 rot_err=0.115872 |tau|=14553
+[HQPID diag#20000] pos_err=0.171023 rot_err=0.0540958 |tau|=9777.73
+[QP] status=Solved solve_t=0.2787ms
+[HQPID diag#20100] pos_err=0.185862 rot_err=0.0669368 |tau|=16863.4
+[HQPID diag#20200] pos_err=0.216705 rot_err=0.137745 |tau|=14847.8
+Control Mode Changed: QPIK_Up
+[HQPID diag#20300] pos_err=0.0435195 rot_err=0.0111018 |tau|=10818.7
+[HQPID diag#20400] pos_err=0.0370327 rot_err=0.0248338 |tau|=14021.5
+[HQPID diag#20500] pos_err=0.0389925 rot_err=0.0223413 |tau|=6480.6
+[QP] status=Solved solve_t=0.075821ms
+[HQPID diag#20600] pos_err=0.034177 rot_err=0.0401365 |tau|=32585
+[HQPID diag#20700] pos_err=0.0328225 rot_err=0.0400885 |tau|=22034.5
+[HQPID diag#20800] pos_err=0.0450124 rot_err=0.0260166 |tau|=9734.64
+[HQPID diag#20900] pos_err=0.0571345 rot_err=0.0125931 |tau|=14445.8
+[HQPID diag#21000] pos_err=0.0501221 rot_err=0.0149354 |tau|=15193.5
+[QP] status=Solved solve_t=0.044193ms
+[HQPID diag#21100] pos_err=0.0498836 rot_err=0.017666 |tau|=28149.6
+[HQPID diag#21200] pos_err=0.0526283 rot_err=0.0189281 |tau|=4848.53
+[HQPID diag#21300] pos_err=0.0543562 rot_err=0.0195216 |tau|=15141
+[HQPID diag#21400] pos_err=0.0540827 rot_err=0.0251956 |tau|=9283.74
+[HQPID diag#21500] pos_err=0.0569062 rot_err=0.0134883 |tau|=25494.6
+[QP] status=Solved solve_t=0.044413ms
+[HQPID diag#21600] pos_err=0.0542157 rot_err=0.0180335 |tau|=13004.6

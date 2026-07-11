@@ -15,14 +15,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "ur8_controller.hpp"
+#include "ur8_controller_qpik.hpp"
 #include <sys/select.h>
 
 #ifndef ROBOTS_DIRECTORY
 #  error "ROBOTS_DIRECTORY is not defined. Define in CMake: -DROBOTS_DIRECTORY=\"${CMAKE_SOURCE_DIR}/../robots\""
 #endif
 
-UR8Controller::UR8Controller(const double dt)
+UR8ControllerQPIK::UR8ControllerQPIK(const double dt)
 : dt_(dt)
 {
     const std::string urdf = std::string(ROBOTS_DIRECTORY) + "/ur8/" + "ur8.urdf";
@@ -52,27 +52,89 @@ UR8Controller::UR8Controller(const double dt)
     // Task-space states
     link_ee_task_[ee_link_name_] = drc::TaskSpaceData::Zero();
 
+    //第一组参数-----------------------------------------------------------------------//
+    // // Gains — start conservative, tune up gradually
+    // joint_kp_.setZero(dof_);
+    // joint_kv_.setZero(dof_);
+    // joint_kp_ <<  5000.0, 8000.0, 12000.0, 3000.0, 2500.0, 2000.0, 1000.0,  500.0, 200.0, 200.0;  // j1 reduced
+    // joint_kv_ <<  8000.0, 6400.0,  9600.0, 2400.0, 2000.0, 1600.0,  800.0,  400.0, 160.0, 160.0;  // j1 damped
+
+    // task_ik_kp_      <<  8.0,   8.0,   8.0,  10.0,  10.0,  10.0;   // balanced
+    // task_id_kp_      << 300.0, 300.0, 300.0, 600.0, 600.0, 600.0;
+    // task_id_kv_      <<  10.0,  10.0,  10.0,  15.0,  15.0,  15.0;
+    // qpik_tracking_   <<  10.0,  10.0,  10.0,  10.0,  10.0,  10.0;   // uniform
+
+    // // QPIK regularization — per-joint (j1~j8, grasp_l, grasp_r)
+    // qpik_vel_damping_.setZero(dof_);
+    // qpik_vel_damping_ << 1.0, 0.5, 0.8, 0.05, 0.05, 0.03, 0.02, 0.01, 0.01, 0.01;
+
+    // qpik_acc_damping_.setZero(dof_);
+    // qpik_acc_damping_ << 0.002, 0.001, 0.002, 0.0005, 0.0005, 0.0008, 0.001, 0.002, 0.002, 0.002;
+
+    // // QPID regularization — per-joint
+    // qpid_tracking_   <<  10.0,  10.0,  10.0,  30.0,  30.0,  30.0;
+
+    // qpid_vel_damping_.setZero(dof_);
+    // qpid_vel_damping_ << 1.0, 0.8, 0.8, 0.5, 0.5, 0.3, 0.2, 0.1, 0.1, 0.1;
+
+    // qpid_acc_damping_.setZero(dof_);
+    // qpid_acc_damping_ << 2.0, 3.0, 3.0, 5.0, 5.0, 8.0, 10.0, 20.0, 20.0, 20.0;
+
+    //第二组参数-----------------------------------------------------------------------//
+    // // Gains — start conservative, tune up gradually
+    // joint_kp_.setZero(dof_);
+    // joint_kv_.setZero(dof_);
+    // joint_kp_ <<  5000.0, 8000.0, 12000.0, 3000.0, 2500.0, 2000.0, 1000.0,  500.0, 200.0, 200.0;  // j1 reduced
+    // joint_kv_ <<  8000.0, 8000.0, 12000.0, 2400.0, 2000.0, 1600.0,  800.0,  400.0, 160.0, 160.0;  // j2,j3 more damped
+
+    // task_ik_kp_      << 60.0,  60.0,  60.0,  10.0,  10.0,  10.0;   // linear authority
+    // task_id_kp_      << 300.0, 300.0, 300.0, 600.0, 600.0, 600.0;
+    // task_id_kv_      <<  10.0,  10.0,  10.0,  15.0,  15.0,  15.0;
+    // qpik_tracking_   <<  60.0,  60.0,  60.0,  10.0,  10.0,  10.0;   // linear authority
+
+    // // QPIK regularization — per-joint (j1~j8, grasp_l, grasp_r)
+    // qpik_vel_damping_.setZero(dof_);
+    // qpik_vel_damping_ << 0.5, 0.005, 0.005, 0.005, 0.005, 0.003, 0.002, 0.001, 0.001, 0.001;   // light damp
+
+    // qpik_acc_damping_.setZero(dof_);
+    // qpik_acc_damping_ << 0.002, 0.001, 0.002, 0.0005, 0.0005, 0.0008, 0.001, 0.002, 0.002, 0.002;
+
+    // // QPID regularization — per-joint
+    // qpid_tracking_   <<  10.0,  10.0,  10.0,  30.0,  30.0,  30.0;
+
+    // qpid_vel_damping_.setZero(dof_);
+    // qpid_vel_damping_ << 1.0, 0.8, 0.8, 0.5, 0.5, 0.3, 0.2, 0.1, 0.1, 0.1;
+
+    // qpid_acc_damping_.setZero(dof_);
+    // qpid_acc_damping_ << 2.0, 3.0, 3.0, 5.0, 5.0, 8.0, 10.0, 20.0, 20.0, 20.0;
+
+    //第三组参数-----------------------------------------------------------------------//
     // Gains — start conservative, tune up gradually
     joint_kp_.setZero(dof_);
     joint_kv_.setZero(dof_);
-    joint_kp_ << 20000.0, 5000.0, 8000.0, 3000.0, 2500.0, 2000.0, 1000.0,  500.0, 200.0, 200.0;  // j3 2x
-    joint_kv_ << 15000.0, 3750.0, 6000.0, 2250.0, 1875.0, 1500.0,  750.0,  375.0, 150.0, 150.0;  // j3 2x
+    joint_kp_ <<  5000.0, 8000.0, 12000.0, 3000.0, 2500.0, 2000.0, 1000.0,  500.0, 200.0, 200.0;  // j1 reduced
+    joint_kv_ <<  8000.0, 8000.0, 12000.0, 2400.0, 2000.0, 1600.0,  800.0,  400.0, 160.0, 160.0;  // j2,j3 more damped
 
-    task_ik_kp_      <<  5.0,   5.0,   5.0,  20.0,  20.0,  20.0;
+    task_ik_kp_      << 25.0,  25.0,  25.0,  10.0,  10.0,  10.0;   // linear moderate, angular low
     task_id_kp_      << 300.0, 300.0, 300.0, 600.0, 600.0, 600.0;
     task_id_kv_      <<  10.0,  10.0,  10.0,  15.0,  15.0,  15.0;
-    qpik_tracking_   <<   5.0,   5.0,   5.0,  20.0,  20.0,  20.0;
+    qpik_tracking_   <<  25.0,  25.0,  25.0,  10.0,  10.0,  10.0;   // linear moderate
 
-    qpik_vel_damping_.setOnes(dof_);
-    qpik_vel_damping_ *= 0.1;
-    qpik_acc_damping_.setOnes(dof_);
-    qpik_acc_damping_ *= 0.001;
+    // QPIK regularization — per-joint (j1~j8, grasp_l, grasp_r)
+    qpik_vel_damping_.setZero(dof_);
+    qpik_vel_damping_ << 0.5, 0.01, 0.01, 0.01, 0.01, 0.005, 0.003, 0.001, 0.001, 0.001;   // balanced
 
-    qpid_tracking_   <<   5.0,   5.0,   5.0,   1.0,   1.0,   1.0;
-    qpid_vel_damping_.setOnes(dof_);
-    qpid_vel_damping_ *= 1.0;
-    qpid_acc_damping_.setOnes(dof_);
-    qpid_acc_damping_ *= 10.0;
+    qpik_acc_damping_.setZero(dof_);
+    qpik_acc_damping_ << 0.002, 0.001, 0.002, 0.0005, 0.0005, 0.0008, 0.001, 0.002, 0.002, 0.002;
+
+    // QPID regularization — per-joint
+    qpid_tracking_   <<  10.0,  10.0,  10.0,  30.0,  30.0,  30.0;
+
+    qpid_vel_damping_.setZero(dof_);
+    qpid_vel_damping_ << 1.0, 0.8, 0.8, 0.5, 0.5, 0.3, 0.2, 0.1, 0.1, 0.1;
+
+    qpid_acc_damping_.setZero(dof_);
+    qpid_acc_damping_ << 2.0, 3.0, 3.0, 5.0, 5.0, 8.0, 10.0, 20.0, 20.0, 20.0;   
 
     robot_controller_->setJointGain(joint_kp_, joint_kv_);
     robot_controller_->setIKGain(task_ik_kp_);
@@ -85,12 +147,12 @@ UR8Controller::UR8Controller(const double dt)
     startKeyListener_();
 }
 
-UR8Controller::~UR8Controller()
+UR8ControllerQPIK::~UR8ControllerQPIK()
 {
     stopKeyListener_();
 }
 
-void UR8Controller::updateModel(const double current_time,
+void UR8ControllerQPIK::updateModel(const double current_time,
                                 const std::unordered_map<std::string, Eigen::VectorXd>& qpos_dict,
                                 const std::unordered_map<std::string, Eigen::VectorXd>& qvel_dict)
 {
@@ -109,7 +171,7 @@ void UR8Controller::updateModel(const double current_time,
     link_ee_task_[ee_link_name_].current_time = sim_time_;
 }
 
-std::unordered_map<std::string, double> UR8Controller::compute()
+std::unordered_map<std::string, double> UR8ControllerQPIK::compute()
 {
     if (is_mode_changed_)
     {
@@ -137,7 +199,7 @@ std::unordered_map<std::string, double> UR8Controller::compute()
                                                                qdot_init_,
                                                                sim_time_,
                                                                control_start_time_,
-                                                               3.0);
+                                                               5.0);
 
         qdot_desired_ = robot_controller_->moveJointVelocityCubic(q_home,
                                                                   Eigen::VectorXd::Zero(dof_),
@@ -145,7 +207,7 @@ std::unordered_map<std::string, double> UR8Controller::compute()
                                                                   qdot_init_,
                                                                   sim_time_,
                                                                   control_start_time_,
-                                                                  3.0);
+                                                                  5.0);
 
         tau_desired_ = robot_controller_->moveJointTorqueStep(q_desired_, qdot_desired_, false);
     }
@@ -155,7 +217,7 @@ std::unordered_map<std::string, double> UR8Controller::compute()
         link_ee_task_[ee_link_name_].x_desired = link_ee_task_[ee_link_name_].x_init;
         link_ee_task_[ee_link_name_].x_desired.translation() += Eigen::Vector3d(0.0, 0.15, 0.15);
 
-        robot_controller_->QPIKCubic(link_ee_task_, 3.0, qdot_desired_);
+        robot_controller_->QPIKCubic(link_ee_task_, 1.5, qdot_desired_);
         q_desired_ = q_ + qdot_desired_ * dt_;
         tau_desired_ = robot_controller_->moveJointTorqueStep(q_desired_, qdot_desired_, false);
     }
@@ -296,14 +358,14 @@ std::unordered_map<std::string, double> UR8Controller::compute()
     return ctrl_dict;
 }
 
-void UR8Controller::setMode(const std::string& control_mode)
+void UR8ControllerQPIK::setMode(const std::string& control_mode)
 {
     is_mode_changed_ = true;
     control_mode_ = control_mode;
     std::cout << "Control Mode Changed: " << control_mode_ << std::endl;
 }
 
-void UR8Controller::startKeyListener_()
+void UR8ControllerQPIK::startKeyListener_()
 {
     tty_ok_ = ::isatty(STDIN_FILENO);
     if (!tty_ok_)
@@ -313,7 +375,7 @@ void UR8Controller::startKeyListener_()
     }
     setRawMode_();
     stop_key_ = false;
-    key_thread_ = std::thread(&UR8Controller::keyLoop_, this);
+    key_thread_ = std::thread(&UR8ControllerQPIK::keyLoop_, this);
 
     std::cout << "[UR8Controller] Keyboard:\n"
               << "  [1] Home  [2] QPIK  [3] Gravity Comp  [4] Gravity Comp W QPID\n"
@@ -322,7 +384,7 @@ void UR8Controller::startKeyListener_()
               << "  [Q] Quit\n";
 }
 
-void UR8Controller::stopKeyListener_()
+void UR8ControllerQPIK::stopKeyListener_()
 {
     if (!tty_ok_) return;
     stop_key_ = true;
@@ -330,7 +392,7 @@ void UR8Controller::stopKeyListener_()
     restoreTerm_();
 }
 
-void UR8Controller::setRawMode_()
+void UR8ControllerQPIK::setRawMode_()
 {
     if (!tty_ok_) return;
     struct termios raw;
@@ -351,7 +413,7 @@ void UR8Controller::setRawMode_()
     }
 }
 
-void UR8Controller::restoreTerm_()
+void UR8ControllerQPIK::restoreTerm_()
 {
     if (!tty_ok_) return;
     if (tcsetattr(STDIN_FILENO, TCSANOW, &orig_term_) == -1)
@@ -360,7 +422,7 @@ void UR8Controller::restoreTerm_()
     }
 }
 
-void UR8Controller::keyLoop_()
+void UR8ControllerQPIK::keyLoop_()
 {
     while (!stop_key_)
     {

@@ -258,9 +258,9 @@ namespace drc
             A_ineq_ds_.block(si_index_.con_qdot_max_start, si_index_.slack_qdot_max_start, si_index_.con_qdot_max_size, si_index_.slack_qdot_max_size) = MatrixXd::Identity(si_index_.con_qdot_max_size, si_index_.slack_qdot_max_size);
             l_ineq_ds_.segment(si_index_.con_qdot_max_start, si_index_.con_qdot_max_size) = - alpha*(qdot_max - qdot);
     
-            // singularity avoidance (CBF)
+            // singularity avoidance (CBF) — disabled, link_name_ not yet implemented
             // Manipulator::ManipulabilityResult mani_data = robot_data_->getManipulability(true, true, link_name_);
-    
+
             // A_ineq_ds_.block(si_index_.con_sing_start, si_index_.qddot_start, si_index_.con_sing_size, si_index_.qddot_size) = mani_data.grad.transpose();
             // A_ineq_ds_.block(si_index_.con_sing_start, si_index_.slack_sing_start, si_index_.con_sing_size, si_index_.slack_sing_size) = MatrixXd::Identity(si_index_.con_sing_size, si_index_.slack_sing_size);
             // l_ineq_ds_(si_index_.con_sing_start) = -mani_data.grad_dot.dot(qdot) - (alpha + alpha)*mani_data.grad.dot(qdot) - alpha*alpha*(mani_data.manipulability -0.01);
@@ -299,7 +299,7 @@ namespace drc
             }
         }
     
-        void QPID::setEqConstraint()    
+        void QPID::setEqConstraint()
         {
             A_eq_ds_.setZero(neqc_, nx_);
             b_eq_ds_.setZero(neqc_);
@@ -307,11 +307,16 @@ namespace drc
             // for dynamics
             const MatrixXd M  = robot_data_->getMassMatrix();
             const MatrixXd nle = robot_data_->getNonlinearEffects();
-    
-            A_eq_ds_.block(si_index_.con_dyn_start,si_index_.qddot_start, si_index_.con_dyn_size, si_index_.qddot_size) = M;
-            A_eq_ds_.block(si_index_.con_dyn_start,si_index_.torque_start, si_index_.con_dyn_size, si_index_.torque_size) = -MatrixXd::Identity(si_index_.con_dyn_size, si_index_.torque_size);
-    
-            b_eq_ds_.segment(si_index_.con_dyn_start, si_index_.con_dyn_size) = -nle;
+
+            // Row-scale dynamics constraints by 1/sqrt(M_ii) for numerical conditioning
+            Eigen::VectorXd row_scale(joint_dof_);
+            for (int i = 0; i < joint_dof_; ++i)
+                row_scale(i) = 1.0 / std::sqrt(std::max(M(i,i), 1e-8));
+
+            A_eq_ds_.block(si_index_.con_dyn_start,si_index_.qddot_start, si_index_.con_dyn_size, si_index_.qddot_size) = row_scale.asDiagonal() * M;
+            A_eq_ds_.block(si_index_.con_dyn_start,si_index_.torque_start, si_index_.con_dyn_size, si_index_.torque_size) = (-row_scale).asDiagonal();
+
+            b_eq_ds_.segment(si_index_.con_dyn_start, si_index_.con_dyn_size) = -(row_scale.asDiagonal() * nle);
         }
     } // namespace Manipulator
 } // namespace drc

@@ -239,9 +239,9 @@ namespace drc
             A_ineq_ds_.block(si_index_.con_q_max_start, si_index_.slack_q_max_start, si_index_.con_q_max_size, si_index_.slack_q_max_size) = MatrixXd::Identity(si_index_.con_q_max_size, si_index_.slack_q_max_size);
             l_ineq_ds_.segment(si_index_.con_q_max_start, si_index_.con_q_max_size) = - alpha*(q_max - q);
     
-            // singularity avoidance (CBF)
+            // singularity avoidance (CBF) — disabled, link_name_ not yet implemented
             // Manipulator::ManipulabilityResult mani_result = robot_data_->getManipulability(true, false, link_name_);
-    
+
             // A_ineq_ds_.block(si_index_.con_sing_start, si_index_.qdot_start, si_index_.con_sing_size, si_index_.qdot_size) = mani_result.grad.transpose();
             // A_ineq_ds_.block(si_index_.con_sing_start, si_index_.slack_sing_start, si_index_.con_sing_size, si_index_.slack_sing_size) = MatrixXd::Identity(si_index_.con_sing_size, si_index_.slack_sing_size);
             // l_ineq_ds_(si_index_.con_sing_start) = - alpha*(mani_result.manipulability -0.01);

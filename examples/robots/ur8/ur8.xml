@@ -4,7 +4,7 @@
   <option timestep="0.001" integrator="implicitfast" gravity="0 0 -9.81"/>
 
   <default>
-    <joint armature="10" damping="500"/>
+    <joint armature="10" damping="200"/>
     <geom contype="0" conaffinity="0"/>
   </default>
 
@@ -32,15 +32,15 @@
     <geom pos="3.6885 -0.0370676 1.2815" quat="1 0 0 0" type="mesh" rgba="0.792157 0.819608 0.933333 1" mesh="link_knife"/>
     <body name="link1" pos="0 0 2.305" quat="0.5 0.5 0.5 0.5">
       <inertial pos="0.0603922 0.0275465 1.06605" quat="0.753364 0.0149893 0.0700118 0.653694" mass="551.547" diaginertia="170.312 146.781 45.8164"/>
-      <joint name="joint1" pos="0 0 0" axis="0 0 1" type="slide" range="0 0.9" armature="50" damping="3000"/>
+      <joint name="joint1" pos="0 0 0" axis="0 0 1" type="slide" range="0 0.9" armature="10" damping="150"/>
       <geom type="mesh" rgba="0.529412 0.54902 0.54902 1" mesh="link1"/>
       <body name="link2" pos="0.194 -0.0646 1.303" quat="0 0.707107 0 -0.707107">
         <inertial pos="0.322168 0.000775625 0.0692508" quat="0.999906 0.00155294 -0.0135293 0.00129043" mass="222.453" diaginertia="19.2154 17.7017 5.14782"/>
-        <joint name="joint2" pos="0 0 0" axis="0 0 1" range="0 3.14"/>
+        <joint name="joint2" pos="0 0 0" axis="0 0 1" range="0 3.14" armature="20" damping="400"/>
         <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link2"/>
         <body name="link3" pos="0.61 0 0.219" quat="0 0 0 1">
           <inertial pos="0.229434 0.000277653 0.118892" quat="0.999839 0.00068162 -0.0175034 0.00395962" mass="127.256" diaginertia="7.09919 6.45538 2.35196"/>
-          <joint name="joint3" pos="0 0 0" axis="0 0 1" range="-3.14 0" armature="30" damping="2000"/>
+          <joint name="joint3" pos="0 0 0" axis="0 0 1" range="-3.14 0" armature="30" damping="500"/>
           <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link3"/>
           <body name="link4" pos="0.513 0 0.13" quat="0.5 -0.5 0.5 -0.5">
             <inertial pos="0.122733 -0.050095 0.205443" quat="0.747395 0.658804 -0.0847284 -0.0141437" mass="187.871" diaginertia="10.6595 9.29996 3.7738"/>
