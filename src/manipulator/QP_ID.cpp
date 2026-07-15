@@ -258,12 +258,22 @@ namespace drc
             A_ineq_ds_.block(si_index_.con_qdot_max_start, si_index_.slack_qdot_max_start, si_index_.con_qdot_max_size, si_index_.slack_qdot_max_size) = MatrixXd::Identity(si_index_.con_qdot_max_size, si_index_.slack_qdot_max_size);
             l_ineq_ds_.segment(si_index_.con_qdot_max_start, si_index_.con_qdot_max_size) = - alpha*(qdot_max - qdot);
     
-            // singularity avoidance (CBF) — disabled, link_name_ not yet implemented
-            // Manipulator::ManipulabilityResult mani_data = robot_data_->getManipulability(true, true, link_name_);
-
-            // A_ineq_ds_.block(si_index_.con_sing_start, si_index_.qddot_start, si_index_.con_sing_size, si_index_.qddot_size) = mani_data.grad.transpose();
-            // A_ineq_ds_.block(si_index_.con_sing_start, si_index_.slack_sing_start, si_index_.con_sing_size, si_index_.slack_sing_size) = MatrixXd::Identity(si_index_.con_sing_size, si_index_.slack_sing_size);
-            // l_ineq_ds_(si_index_.con_sing_start) = -mani_data.grad_dot.dot(qdot) - (alpha + alpha)*mani_data.grad.dot(qdot) - alpha*alpha*(mani_data.manipulability -0.01);
+            // ---- singularity avoidance CBF (2nd-order) ----
+            if (!link_xddot_desired_.empty()) {
+                const std::string& ee_link = link_xddot_desired_.begin()->first;
+                Manipulator::ManipulabilityResult mani_data = robot_data_->getManipulability(true, true, ee_link);
+                if (mani_data.grad.size() == joint_dof_ && mani_data.grad.allFinite()
+                    && mani_data.grad_dot.allFinite() && mani_data.manipulability > 1e-12
+                    && mani_data.grad.squaredNorm() > 1e-12) {
+                    const double m_min = 0.02;
+                    A_ineq_ds_.block(si_index_.con_sing_start, si_index_.qddot_start, si_index_.con_sing_size, si_index_.qddot_size) = mani_data.grad.transpose();
+                    A_ineq_ds_.block(si_index_.con_sing_start, si_index_.slack_sing_start, si_index_.con_sing_size, si_index_.slack_sing_size) = MatrixXd::Identity(si_index_.con_sing_size, si_index_.slack_sing_size);
+                    l_ineq_ds_(si_index_.con_sing_start) = -mani_data.grad_dot.dot(qdot)
+                        - (alpha + alpha) * mani_data.grad.dot(qdot)
+                        - alpha * alpha * (mani_data.manipulability - m_min);
+                    u_ineq_ds_(si_index_.con_sing_start) = OSQP_INFTY;
+                }
+            }
             
             // self collision avoidance (CBF)
             const Manipulator::MinDistResult min_dist_data = robot_data_->getMinDistance(true, true, false);

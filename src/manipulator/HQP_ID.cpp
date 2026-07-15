@@ -445,11 +445,23 @@ SharedIneqDataID HQPID::computeSharedConstraints()
         // con_col row stays trivial
     }
 
-    // ---- singularity CBF (reserved – trivial row) ----
-    // const ManipulabilityResult mani = robot_data_->getManipulability(true, true, link_name);
-    // data.A.row(si_index_.con_sing_start) = mani.grad.transpose();
-    // data.l(si_index_.con_sing_start) = -mani.grad_dot.dot(qdot)
-    //     - 2*alpha*mani.grad.dot(qdot) - alpha*alpha*(mani.manipulability - 0.01);
+    // ---- singularity CBF (2nd-order) ----
+    // Prevents manipulator from approaching kinematic singularities
+    // where the Jacobian loses rank and task-space control becomes impossible.
+    if (!tasks_.empty() && !tasks_[0].empty()) {
+        const std::string& ee_link = tasks_[0].begin()->first;
+        const ManipulabilityResult mani = robot_data_->getManipulability(true, true, ee_link);
+        if (mani.grad.size() == joint_dof_ && mani.grad.allFinite() && mani.grad_dot.allFinite()
+            && mani.manipulability > 1e-12 && mani.grad.squaredNorm() > 1e-12) {
+            const double m_min = 0.02;  // minimum manipulability threshold
+            // ∇m·qddot >= -∇̇m·qdot - 2α·∇m·qdot - α²·(m - m_min)
+            data.A.row(si_index_.con_sing_start) = mani.grad.transpose();
+            data.l(si_index_.con_sing_start) = -mani.grad_dot.dot(qdot)
+                - (alpha + alpha) * mani.grad.dot(qdot)
+                - alpha * alpha * (mani.manipulability - m_min);
+            data.u(si_index_.con_sing_start) = OSQP_INFTY;
+        }
+    }
 
     return data;
 }

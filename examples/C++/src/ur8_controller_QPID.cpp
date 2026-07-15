@@ -37,24 +37,32 @@ UR8ControllerQPID::UR8ControllerQPID(const double dt)
 
     link_ee_task_[ee_link_name_] = drc::TaskSpaceData::Zero();
 
-    // ── Joint PD gains (for Home / Pose Knife) ──
-    joint_kp_.setZero(dof_);
-    joint_kv_.setZero(dof_);
+    //第一组参数-----------------------------------------------------------------------//
+    // // ── Joint PD gains (for Home / Pose Knife) ──
+    // joint_kp_.setZero(dof_);
+    // joint_kv_.setZero(dof_);
+    // joint_kp_ <<  5000.0, 8000.0, 12000.0, 3000.0, 2500.0, 2000.0, 1000.0,  500.0, 200.0, 200.0;
+    // joint_kv_ <<  8000.0, 8000.0, 12000.0, 2400.0, 2000.0, 1600.0,  800.0,  400.0, 160.0, 160.0;
+
+    // // ── Task-space ID gains (for QPID) ──
+    // task_id_kp_      <<  80.0,  80.0,  80.0, 200.0, 200.0, 200.0;   // high rotation stiffness
+    // task_id_kv_      <<  18.0,  18.0,  18.0,  28.0,  28.0,  28.0;   // critical damping
+
+    // // ── QPID gains: mass-proportional damping ──
+    // qpid_tracking_   << 1000.0, 1000.0, 1000.0, 3000.0, 3000.0, 3000.0;   // rotation 3x priority
+    
+    //第二组参数-----------------------------------------------------------------------//
+    // Joint PD gains
+    joint_kp_.setZero(dof_); joint_kv_.setZero(dof_);
     joint_kp_ <<  5000.0, 8000.0, 12000.0, 3000.0, 2500.0, 2000.0, 1000.0,  500.0, 200.0, 200.0;
     joint_kv_ <<  8000.0, 8000.0, 12000.0, 2400.0, 2000.0, 1600.0,  800.0,  400.0, 160.0, 160.0;
 
-    // ── Task-space ID gains (for QPID) ──
-    task_ik_kp_      << 25.0,  25.0,  25.0,  10.0,  10.0,  10.0;   // not used by QPID
-    task_id_kp_      <<  80.0,  80.0,  80.0, 200.0, 200.0, 200.0;   // high rotation stiffness
-    task_id_kv_      <<  18.0,  18.0,  18.0,  28.0,  28.0,  28.0;   // critical damping
+    task_id_kp_      <<  120.0,  120.0,  120.0, 300.0, 300.0, 300.0;   // high rotation stiffness to prevent drift
+    task_id_kv_      <<  22.0,  22.0,  22.0,  35.0,  35.0,  35.0;   // ζ≈1.0 critically damped
 
-    // ── QPIK (kept for compatibility) ──
-    qpik_tracking_   << 25.0,  25.0,  25.0,  10.0,  10.0,  10.0;
-    qpik_vel_damping_.setOnes(dof_);  qpik_vel_damping_ *= 0.01;
-    qpik_acc_damping_.setOnes(dof_);  qpik_acc_damping_ *= 0.0005;
-
-    // ── QPID gains: mass-proportional damping ──
-    qpid_tracking_   << 1000.0, 1000.0, 1000.0, 3000.0, 3000.0, 3000.0;   // rotation 3x priority
+    //跟踪权重 5x，QP 更重视精度
+    qpid_tracking_   << 5000.0, 5000.0, 5000.0, 5000.0, 5000.0, 5000.0;  
+    
     qpid_vel_damping_.setZero(dof_);
     qpid_acc_damping_.setZero(dof_);
 
@@ -97,20 +105,61 @@ void UR8ControllerQPID::updateModel(const double current_time,
     link_ee_task_[ee_link_name_].x    = robot_data_->getPose(ee_link_name_);
     link_ee_task_[ee_link_name_].xdot = robot_data_->getVelocity(ee_link_name_);
     link_ee_task_[ee_link_name_].current_time = sim_time_;
+
+    // Print manipulability every 200 steps
+    {
+        static int mani_cnt = 0;
+        if (++mani_cnt % 200 == 0) {
+            auto mani = robot_data_->getManipulability(false, false, ee_link_name_);
+            std::cout << "[QPID Manipulability] m=" << mani.manipulability
+                      << "  (0=singular, >0.1=safe)" << std::endl;
+        }
+    }
 }
 
 std::unordered_map<std::string, double> UR8ControllerQPID::compute()
 {
+    // Track previous mode to detect repeated same-key presses
+    static std::string prev_mode;
+    static Eigen::Affine3d saved_x_init = Eigen::Affine3d::Identity();
+    static Eigen::Vector3d accumulated_offset = Eigen::Vector3d::Zero();
+    static double accumulated_angle_x = 0.0;  // for Pitch
+    static double accumulated_angle_z = 0.0;  // for Roller
+    static double saved_start_time = 0.0;
+    bool is_repeat = false;
+    bool mode_just_changed = is_mode_changed_;
+
     if (is_mode_changed_) {
+        const bool is_trans = (control_mode_ == "QPID_Up" || control_mode_ == "QPID_Down" ||
+                               control_mode_ == "QPID_Left" || control_mode_ == "QPID_Right" ||
+                               control_mode_ == "QPID_Forward" || control_mode_ == "QPID_Anti");
+        const bool is_rot = (control_mode_ == "QPID_Pitch_Forward" || control_mode_ == "QPID_Pitch_Anti" ||
+                             control_mode_ == "QPID_Roller_Forward" || control_mode_ == "QPID_Roller_Anti");
+        is_repeat = (is_trans || is_rot) && (control_mode_ == prev_mode);
+
         is_mode_changed_ = false;
-        control_start_time_ = sim_time_;
-        q_init_ = q_;
-        qdot_init_ = qdot_;
-        link_ee_task_[ee_link_name_].setInit();
+
+        if (is_repeat) {
+            control_start_time_ = saved_start_time;
+            q_init_ = q_; qdot_init_ = qdot_;
+            link_ee_task_[ee_link_name_].x_init = saved_x_init;
+        } else {
+            control_start_time_ = sim_time_;
+            saved_start_time = sim_time_;
+            accumulated_offset = Eigen::Vector3d::Zero();
+            accumulated_angle_x = 0.0;
+            accumulated_angle_z = 0.0;
+            q_init_ = q_; qdot_init_ = qdot_;
+            link_ee_task_[ee_link_name_].setInit();
+            saved_x_init = link_ee_task_[ee_link_name_].x_init;
+        }
         q_desired_ = q_init_;
         qdot_desired_.setZero(dof_);
         link_ee_task_[ee_link_name_].setDesired();
         link_ee_task_[ee_link_name_].xdot_desired.setZero();
+    }
+    if (mode_just_changed) {
+        prev_mode = control_mode_;
     }
 
     // ── Joint-space modes ──
@@ -142,64 +191,44 @@ std::unordered_map<std::string, double> UR8ControllerQPID::compute()
         link_ee_task_[ee_link_name_].x_desired.translation() += Eigen::Vector3d(0.0, 0.15, 0.15);
         robot_controller_->QPIDCubic(link_ee_task_, 2.0, tau_desired_);
     }
-    else if (control_mode_ == "QPID_Up") {
-        const Eigen::Matrix3d R_ee = link_ee_task_[ee_link_name_].x_init.rotation();
-        const Eigen::Vector3d offset = R_ee * Eigen::Vector3d(0.0, 0.05, 0.0);
-        link_ee_task_[ee_link_name_].x_desired = link_ee_task_[ee_link_name_].x_init;
-        link_ee_task_[ee_link_name_].x_desired.translation() += offset;
+    // ── Translation modes (accumulate offset on repeat key) ──
+    else if (control_mode_ == "QPID_Up" || control_mode_ == "QPID_Down" ||
+             control_mode_ == "QPID_Left" || control_mode_ == "QPID_Right" ||
+             control_mode_ == "QPID_Forward" || control_mode_ == "QPID_Anti")
+    {
+        Eigen::Vector3d step;
+        if      (control_mode_ == "QPID_Up")    step = Eigen::Vector3d(0.0,  0.05, 0.0);
+        else if (control_mode_ == "QPID_Down")  step = Eigen::Vector3d(0.0, -0.05, 0.0);
+        else if (control_mode_ == "QPID_Left")  step = Eigen::Vector3d(-0.05, 0.0, 0.0);
+        else if (control_mode_ == "QPID_Right") step = Eigen::Vector3d( 0.05, 0.0, 0.0);
+        else if (control_mode_ == "QPID_Forward") step = Eigen::Vector3d(0.0, 0.0,  0.05);
+        else /* QPID_Anti */                     step = Eigen::Vector3d(0.0, 0.0, -0.05);
+
+        if (mode_just_changed) {
+            if (is_repeat) accumulated_offset += saved_x_init.rotation() * step;
+            else           accumulated_offset  = saved_x_init.rotation() * step;
+        }
+        link_ee_task_[ee_link_name_].x_desired = saved_x_init;
+        link_ee_task_[ee_link_name_].x_desired.translation() += accumulated_offset;
         robot_controller_->QPIDCubic(link_ee_task_, 2.0, tau_desired_);
     }
-    else if (control_mode_ == "QPID_Down") {
-        const Eigen::Matrix3d R_ee = link_ee_task_[ee_link_name_].x_init.rotation();
-        const Eigen::Vector3d offset = R_ee * Eigen::Vector3d(0.0, -0.05, 0.0);
-        link_ee_task_[ee_link_name_].x_desired = link_ee_task_[ee_link_name_].x_init;
-        link_ee_task_[ee_link_name_].x_desired.translation() += offset;
-        robot_controller_->QPIDCubic(link_ee_task_, 2.0, tau_desired_);
-    }
-    else if (control_mode_ == "QPID_Left") {
-        const Eigen::Matrix3d R_ee = link_ee_task_[ee_link_name_].x_init.rotation();
-        const Eigen::Vector3d offset = R_ee * Eigen::Vector3d(-0.05, 0.0, 0.0);
-        link_ee_task_[ee_link_name_].x_desired = link_ee_task_[ee_link_name_].x_init;
-        link_ee_task_[ee_link_name_].x_desired.translation() += offset;
-        robot_controller_->QPIDCubic(link_ee_task_, 2.0, tau_desired_);
-    }
-    else if (control_mode_ == "QPID_Right") {
-        const Eigen::Matrix3d R_ee = link_ee_task_[ee_link_name_].x_init.rotation();
-        const Eigen::Vector3d offset = R_ee * Eigen::Vector3d(0.05, 0.0, 0.0);
-        link_ee_task_[ee_link_name_].x_desired = link_ee_task_[ee_link_name_].x_init;
-        link_ee_task_[ee_link_name_].x_desired.translation() += offset;
-        robot_controller_->QPIDCubic(link_ee_task_, 2.0, tau_desired_);
-    }
-    else if (control_mode_ == "QPID_Pitch_Forward") {
-        const double angle = 5.0 * M_PI / 180.0;
-        const Eigen::AngleAxisd delta_rot(angle, Eigen::Vector3d::UnitX());
-        link_ee_task_[ee_link_name_].x_desired = link_ee_task_[ee_link_name_].x_init;
-        link_ee_task_[ee_link_name_].x_desired.linear() =
-            link_ee_task_[ee_link_name_].x_init.linear() * delta_rot.toRotationMatrix();
-        robot_controller_->QPIDCubic(link_ee_task_, 2.0, tau_desired_);
-    }
-    else if (control_mode_ == "QPID_Pitch_Anti") {
-        const double angle = -5.0 * M_PI / 180.0;
-        const Eigen::AngleAxisd delta_rot(angle, Eigen::Vector3d::UnitX());
-        link_ee_task_[ee_link_name_].x_desired = link_ee_task_[ee_link_name_].x_init;
-        link_ee_task_[ee_link_name_].x_desired.linear() =
-            link_ee_task_[ee_link_name_].x_init.linear() * delta_rot.toRotationMatrix();
-        robot_controller_->QPIDCubic(link_ee_task_, 2.0, tau_desired_);
-    }
-    else if (control_mode_ == "QPID_Roller_Anti") {
-        const double angle = -5.0 * M_PI / 180.0;
-        const Eigen::AngleAxisd delta_rot(angle, Eigen::Vector3d::UnitZ());
-        link_ee_task_[ee_link_name_].x_desired = link_ee_task_[ee_link_name_].x_init;
-        link_ee_task_[ee_link_name_].x_desired.linear() =
-            link_ee_task_[ee_link_name_].x_init.linear() * delta_rot.toRotationMatrix();
-        robot_controller_->QPIDCubic(link_ee_task_, 2.0, tau_desired_);
-    }
-    else if (control_mode_ == "QPID_Roller_Forward") {
-        const double angle = 5.0 * M_PI / 180.0;
-        const Eigen::AngleAxisd delta_rot(angle, Eigen::Vector3d::UnitZ());
-        link_ee_task_[ee_link_name_].x_desired = link_ee_task_[ee_link_name_].x_init;
-        link_ee_task_[ee_link_name_].x_desired.linear() =
-            link_ee_task_[ee_link_name_].x_init.linear() * delta_rot.toRotationMatrix();
+    // ── Rotation modes (accumulate angle on repeat key) ──
+    else if (control_mode_ == "QPID_Pitch_Forward" || control_mode_ == "QPID_Pitch_Anti" ||
+             control_mode_ == "QPID_Roller_Forward" || control_mode_ == "QPID_Roller_Anti")
+    {
+        const double step_deg = 5.0 * M_PI / 180.0;
+        if (mode_just_changed) {
+            if      (control_mode_ == "QPID_Pitch_Forward")  { if (is_repeat) accumulated_angle_x += step_deg;  else accumulated_angle_x =  step_deg; }
+            else if (control_mode_ == "QPID_Pitch_Anti")     { if (is_repeat) accumulated_angle_x -= step_deg;  else accumulated_angle_x = -step_deg; }
+            else if (control_mode_ == "QPID_Roller_Forward") { if (is_repeat) accumulated_angle_z += step_deg;  else accumulated_angle_z =  step_deg; }
+            else /* QPID_Roller_Anti */                      { if (is_repeat) accumulated_angle_z -= step_deg;  else accumulated_angle_z = -step_deg; }
+        }
+        Eigen::Matrix3d R_target = saved_x_init.linear()
+            * Eigen::AngleAxisd(accumulated_angle_x, Eigen::Vector3d::UnitX()).toRotationMatrix()
+            * Eigen::AngleAxisd(accumulated_angle_z, Eigen::Vector3d::UnitZ()).toRotationMatrix();
+        link_ee_task_[ee_link_name_].x_desired = saved_x_init;
+        link_ee_task_[ee_link_name_].x_desired.linear() = R_target;
+        link_ee_task_[ee_link_name_].x_desired.translation() += accumulated_offset;
         robot_controller_->QPIDCubic(link_ee_task_, 2.0, tau_desired_);
     }
 
@@ -270,12 +299,18 @@ void UR8ControllerQPID::keyLoop_() {
                 else if (c == '4')          setMode("Gravity Compensation W QPID");
                 else if (c == '5')          setMode("Pose Knife");
                 else if (c == '\x1b' && i+2 < n && buf[i+1]=='[') {
-                    char code = buf[i+2];
-                    if (code=='A') setMode("QPID_Up");
-                    else if (code=='B') setMode("QPID_Down");
-                    else if (code=='C') setMode("QPID_Right");
-                    else if (code=='D') setMode("QPID_Left");
-                    i += 2;
+                    // Ctrl+Up/Down: \x1b[1;5A / \x1b[1;5B
+                    if (i+5 < n && buf[i+2]=='1' && buf[i+3]==';' && buf[i+4]=='5') {
+                        char code = buf[i+5]; i += 5;
+                        if (code=='A') setMode("QPID_Forward");
+                        else if (code=='B') setMode("QPID_Anti");
+                    } else {
+                        char code = buf[i+2]; i += 2;
+                        if (code=='A') setMode("QPID_Up");
+                        else if (code=='B') setMode("QPID_Down");
+                        else if (code=='C') setMode("QPID_Right");
+                        else if (code=='D') setMode("QPID_Left");
+                    }
                 }
                 else if (c=='w'||c=='W') setMode("QPID_Pitch_Forward");
                 else if (c=='s'||c=='S') setMode("QPID_Pitch_Anti");
